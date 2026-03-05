@@ -30,7 +30,7 @@ export default function ProfilePage() {
         );
 
     return (
-        <div className="min-h-screen text-white pb-20 bg-gradient">
+        <div className="min-h-screen text-white pb-20">
 
             {/* ================= BANNER ================= */}
             <div className="relative h-[400px] w-full mt-16 overflow-hidden">

@@ -142,7 +142,7 @@ export default function CommentPage() {
 
     return (
         <>
-        <div className="mt-15"></div>
+            <div className="mt-15"></div>
             <CommentBanner />
             <div className="min-h-screen text-white pb-20">
 
@@ -262,6 +262,18 @@ export default function CommentPage() {
                                                                 <h4 className="font-bold text-blue-400 text-sm drop-shadow-md">
                                                                     {comment.user.username}
                                                                 </h4>
+                                                                {comment.user.tags?.length > 0 && (
+                                                                    <div className="flex flex-wrap gap-1 mt-1 mb-3">
+                                                                        {comment.user.tags.map((tag: string, index: number) => (
+                                                                            <span
+                                                                                key={index}
+                                                                                className="text-[9px] px-2 py-[2px] rounded-full bg-blue-500/15 text-blue-300 border border-blue-400/20 font-semibold tracking-wide"
+                                                                            >
+                                                                                {tag}
+                                                                            </span>
+                                                                        ))}
+                                                                    </div>
+                                                                )}
                                                                 <div className="flex gap-0.5 mt-1">
                                                                     {[...Array(5)].map((_, i) => (
                                                                         <Star
