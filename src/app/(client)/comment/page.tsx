@@ -1,6 +1,7 @@
 "use client";
 
 import { DataPagination } from "@/components/admin/pagination/data-pagination";
+import { ConfirmDialog } from "@/components/common/confirm/confirm-dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { MovieStatusEnum } from "@/constants/enum";
 import { cn } from "@/lib/utils";
@@ -25,6 +26,9 @@ export default function CommentPage() {
     const [rating, setRating] = useState<number>(5);
     const [page, setPage] = useState(1);
     const [replyingComment, setReplyingComment] = useState<any | null>(null);
+
+    const [deleteId, setDeleteId] = useState<string | null>(null);
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
     // State cho việc chỉnh sửa
     const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
@@ -66,17 +70,6 @@ export default function CommentPage() {
         setEditingCommentId(null);
         setCommentContent("");
         setRating(5);
-    };
-
-    const handleDelete = (id: string) => {
-        if (confirm("Bạn có chắc chắn muốn xóa bình luận này?")) {
-            deleteCommentMutation.mutate(id, {
-                onSuccess: () => {
-                    toast.success("Đã xóa bình luận");
-                    refetchComments();
-                }
-            });
-        }
     };
 
     const handleToggleLike = (id: string) => {
@@ -138,6 +131,22 @@ export default function CommentPage() {
                 }
             );
         }
+    };
+
+    const confirmDelete = () => {
+        if (!deleteId) return;
+
+        deleteCommentMutation.mutate(deleteId, {
+            onSuccess: () => {
+                toast.success("Đã xóa bình luận");
+                setOpenDeleteDialog(false);
+                setDeleteId(null);
+                refetchComments();
+            },
+            onError: (error: any) => {
+                handleError(error);
+            }
+        });
     };
 
     return (
@@ -295,7 +304,13 @@ export default function CommentPage() {
                                                                     <DropdownMenuItem onClick={() => handleEditClick(comment)} className="gap-2 cursor-pointer focus:bg-blue-600 focus:text-white">
                                                                         <Edit2 size={14} /> Sửa
                                                                     </DropdownMenuItem>
-                                                                    <DropdownMenuItem onClick={() => deleteCommentMutation.mutate(comment._id)} className="gap-2 text-red-500 cursor-pointer focus:bg-red-600 focus:text-white">
+                                                                    <DropdownMenuItem
+                                                                        onClick={() => {
+                                                                            setDeleteId(comment._id);
+                                                                            setOpenDeleteDialog(true);
+                                                                        }}
+                                                                        className="gap-2 text-red-500 cursor-pointer focus:bg-red-600 focus:text-white"
+                                                                    >
                                                                         <Trash2 size={14} /> Xóa
                                                                     </DropdownMenuItem>
                                                                 </DropdownMenuContent>
@@ -401,6 +416,15 @@ export default function CommentPage() {
                     onClose={() => setReplyingComment(null)}
                     currentUser={currentUser}
                     movieId={selectedMovieId || ""}
+                />
+
+                <ConfirmDialog
+                    open={openDeleteDialog}
+                    onClose={() => setOpenDeleteDialog(false)}
+                    onConfirm={confirmDelete}
+                    isLoading={deleteCommentMutation.isPending}
+                    title="Xóa bình luận?"
+                    description="Bình luận sẽ bị xóa vĩnh viễn và không thể khôi phục."
                 />
             </div>
         </>

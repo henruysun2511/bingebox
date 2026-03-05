@@ -1,4 +1,5 @@
 "use client";
+import LoadingScreen from "@/components/common/loading/loading-screen";
 import { useTicketDetail } from "@/queries/useTicketQuery";
 import { useParams } from "next/navigation";
 
@@ -9,7 +10,7 @@ export default function TicketDetailPage() {
     const { data: ticketRes, isLoading, error } = useTicketDetail(id!);
     const ticket = ticketRes?.data;
 
-    if (isLoading) return <div className="text-center p-10">Đang tải dữ liệu vé...</div>;
+    if (isLoading) return <LoadingScreen />;
     if (error) return <div className="text-center p-10 text-red-500">Lỗi khi tải dữ liệu vé.</div>;
     if (!ticket) return <div className="text-center p-10">Không tìm thấy vé.</div>;
 

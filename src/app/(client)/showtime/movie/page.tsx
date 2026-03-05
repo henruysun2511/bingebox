@@ -1,5 +1,6 @@
 "use client";
 
+import LoadingScreen from "@/components/common/loading/loading-screen";
 import SectionTitle from "@/components/common/title/section-title";
 import { MovieStatusEnum } from "@/constants/enum";
 import { useMovieList } from "@/queries/useMovieQuery";
@@ -11,7 +12,7 @@ export default function ShowtimeMoviePage() {
     const { data: moviesRes, isLoading } = useMovieList({ status: MovieStatusEnum.NOW_SHOWING });
     const movies = moviesRes?.data || [];
 
-    if (isLoading) return <div className="p-20 text-white text-center">Đang tải danh sách phim...</div>;
+    if (isLoading) return <LoadingScreen />;
 
     return (
         <>

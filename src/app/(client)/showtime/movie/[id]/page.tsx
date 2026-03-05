@@ -15,6 +15,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
 
+import LoadingScreen from "@/components/common/loading/loading-screen";
 import SectionTitle from "@/components/common/title/section-title";
 import { Button } from "@/components/ui/button";
 import { MovieStatusEnum } from "@/constants/enum";
@@ -83,7 +84,7 @@ export default function MovieShowtimeDetailPage() {
     }).filter((cinema: any) => cinema.formats.length > 0);
   }, [selectedPastDate, allShowtimesRaw]);
 
-  if (isMovieLoading) return <div className="min-h-screen bg-black flex items-center justify-center text-golden">Đang tải...</div>;
+  if (isMovieLoading) return <LoadingScreen />
   if (!movie) return <div className="min-h-screen bg-black flex items-center justify-center">Không tìm thấy phim</div>;
 
   return (

@@ -1,6 +1,7 @@
 "use client";
 
 import BlogList from "@/components/client/blog/blog-list";
+import LoadingScreen from "@/components/common/loading/loading-screen";
 import SectionTitle from "@/components/common/title/section-title";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { BaseStatusEnum } from "@/constants/enum";
@@ -31,7 +32,7 @@ export default function BlogPage() {
         }
     }, [setting]);
 
-    if (isLoading) return null;
+    if (isLoading) return <LoadingScreen />;
 
 
     return (

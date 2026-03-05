@@ -33,7 +33,7 @@ export default function ProfilePage() {
         <div className="min-h-screen text-white pb-20">
 
             {/* ================= BANNER ================= */}
-            <div className="relative h-[400px] w-full mt-16 overflow-hidden">
+            <div className="relative h-[500px] w-full mt-16 overflow-hidden">
                 <img
                     src={user.banner}
                     className="w-full h-full object-cover"

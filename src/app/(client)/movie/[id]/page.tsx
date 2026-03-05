@@ -1,6 +1,7 @@
 "use client";
 
 import AuthorMessage from "@/components/author/author-message";
+import LoadingScreen from "@/components/common/loading/loading-screen";
 import SectionTitle from "@/components/common/title/section-title";
 import { Button } from "@/components/ui/button";
 import { MovieStatusEnum } from "@/constants/enum";
@@ -92,7 +93,7 @@ export default function MovieDetailPage() {
         showtimeRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
-    if (isLoading) return <div className="text-white p-10">Loading...</div>;
+    if (isLoading) return <LoadingScreen />;
     if (!movie) return <div className="text-white p-10">Movie not found</div>;
 
 

@@ -1,5 +1,6 @@
 "use client";
 
+import LoadingScreen from "@/components/common/loading/loading-screen";
 import { useBookingDetail, useFakeFail, useFakePay } from "@/queries/useBookingQuery";
 import { differenceInSeconds, format } from "date-fns";
 import {
@@ -62,7 +63,7 @@ export default function PaymentDetailPage() {
         return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
     };
 
-    if (isLoading) return <div className="min-h-screen flex items-center justify-center text-white">Đang tải hóa đơn...</div>;
+    if (isLoading) return <LoadingScreen />;
 
     if (!booking) return <div className="min-h-screen flex items-center justify-center text-white">Không tìm thấy thông tin đặt vé.</div>;
 

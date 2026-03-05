@@ -1,6 +1,7 @@
 "use client";
 
 import BlogList from "@/components/client/blog/blog-list";
+import LoadingScreen from "@/components/common/loading/loading-screen";
 import SectionTitle from "@/components/common/title/section-title";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useBlogDetail } from "@/queries/useBlogQuery";
@@ -15,9 +16,7 @@ export default function BlogDetailPage() {
 
     if (isLoading) {
         return (
-            <div className="max-w-4xl mx-auto py-20 text-center text-muted-foreground">
-                Đang tải bài viết...
-            </div>
+            <LoadingScreen />
         );
     }
 

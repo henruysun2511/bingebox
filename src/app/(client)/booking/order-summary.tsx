@@ -216,9 +216,35 @@ export default function OrderSummary({
                 )}
                 <button
                     onClick={handleNext}
-                    className="flex-[2] bg-blue hover:bg-blue-600 text-white py-3 rounded-lg font-bold transition uppercase"
+                    disabled={isPending}
+                    className={`flex-[2] py-3 rounded-lg font-bold transition uppercase flex items-center justify-center gap-2
+    ${isPending
+                            ? "bg-blue/60 cursor-not-allowed"
+                            : "bg-blue hover:bg-blue-600"
+                        }`}
                 >
-                    {step === 3 ? "Hoàn thành" : "Tiếp tục"}
+                    {isPending ? (
+                        <>
+                            <svg
+                                className="w-4 h-4 animate-spin"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                            >
+                                <circle
+                                    cx="12"
+                                    cy="12"
+                                    r="10"
+                                    stroke="white"
+                                    strokeWidth="3"
+                                    strokeDasharray="60"
+                                    strokeLinecap="round"
+                                />
+                            </svg>
+                            Đang xử lý...
+                        </>
+                    ) : (
+                        step === 3 ? "Hoàn thành" : "Tiếp tục"
+                    )}
                 </button>
             </div>
         </div>

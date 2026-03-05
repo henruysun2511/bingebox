@@ -5,6 +5,7 @@ import Carousel from "@/components/client/carousel/carousel";
 import MovieComingSoonList from "@/components/client/movie/movie-comingsoon-list";
 import MovieNowShowingList from "@/components/client/movie/movie-nowshowing-list";
 import PromotionList from "@/components/client/promotion/promotion-list";
+import LoadingScreen from "@/components/common/loading/loading-screen";
 import SectionTitle from "@/components/common/title/section-title";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { BaseStatusEnum } from "@/constants/enum";
@@ -34,7 +35,7 @@ export default function Home() {
     }
   }, [setting]);
 
-  if (isLoading) return null;
+  if (isLoading) return <LoadingScreen />;
 
   const activeBanners =
     setting?.banner
