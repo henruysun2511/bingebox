@@ -98,7 +98,7 @@ export default function Header({ logo }: { logo: string }) {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full !z-[20] bg-[#2e4ba6] shadow-[0_3px_3px_rgba(0,0,0,0.1)] px-4 md:px-[50px]">
+    <header className="fixed top-0 left-0 w-full !z-[20] bg-blue shadow-[0_3px_3px_rgba(0,0,0,0.1)] px-4 md:px-[50px]">
       <div className="flex items-center justify-between h-20 max-w-7xl mx-auto">
 
         {/* Logo Section */}
@@ -142,7 +142,10 @@ export default function Header({ logo }: { logo: string }) {
                   </>
                 ) : (
                   <NavigationMenuLink asChild>
-                    <Link href={item.href} className="...">
+                    <Link
+                      href={item.href}
+                      className="group inline-flex h-20 w-max items-center justify-center bg-transparent px-4 text-sm font-medium text-white transition-colors hover:bg-blue-700 focus:bg-blue-700 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                    >
                       {item.title}
                     </Link>
                   </NavigationMenuLink>

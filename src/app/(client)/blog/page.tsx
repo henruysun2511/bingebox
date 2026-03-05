@@ -58,7 +58,7 @@ export default function BlogPage() {
             </Dialog>
             <div className="mt-15"></div>
             <BlogBanner />
-            <div className="!max-w-[1400px] mx-auto px-10 py-20">
+            <div className="!max-w-[1400px] mx-auto px-20 py-20">
                 <SectionTitle title="Bài viết nổi bật" />
                 <BlogList />
             </div>

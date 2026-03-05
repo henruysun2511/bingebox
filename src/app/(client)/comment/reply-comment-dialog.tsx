@@ -3,11 +3,11 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import {
-    useCommentReplies,
-    useCreateComment,
-    useDeleteComment,
-    useToggleLikeComment,
-    useUpdateComment
+  useCommentReplies,
+  useCreateComment,
+  useDeleteComment,
+  useToggleLikeComment,
+  useUpdateComment
 } from "@/queries/useCommentQuery";
 import { createCommentSchema } from "@/schemas/comment.schema";
 import { Edit2, Loader2, MessageCircle, MoreVertical, Send, ThumbsUp, Trash2, X } from "lucide-react";
@@ -88,10 +88,10 @@ export function ReplyDialog({ parentComment, onClose, currentUser, movieId }: Re
 
   return (
     <Dialog open={!!parentComment} onOpenChange={onClose}>
-      <DialogContent className="!max-w-4xl bg-[#1a1a4a] text-white border-white/10 max-h-[85vh] flex flex-col p-0 overflow-hidden">
+      <DialogContent className="!max-w-4xl bg-[#111] text-white border-white/10 max-h-[85vh] flex flex-col p-0 overflow-hidden">
         <DialogHeader className="p-6 border-b border-white/10">
           <DialogTitle className="text-xl flex items-center gap-2 font-bold">
-            <MessageCircle size={20} className="text-blue-400" />
+            <MessageCircle size={20} className="text-blue-500" />
             Phản hồi bình luận
           </DialogTitle>
         </DialogHeader>
@@ -126,7 +126,7 @@ export function ReplyDialog({ parentComment, onClose, currentUser, movieId }: Re
                       <img src={reply.user.avatar} className="w-8 h-8 rounded-full object-cover border border-white/10" alt="" />
                       <div className="flex-1">
                         <div className="flex justify-between items-start">
-                          <span className="font-semibold text-blue-300 text-sm">{reply.user.username}</span>
+                          <span className="font-semibold text-blue-500 text-sm">{reply.user.username}</span>
                           {isMine && (
                             <DropdownMenu>
                               <DropdownMenuTrigger className="p-1 hover:bg-white/10 rounded-full outline-none">
@@ -171,7 +171,7 @@ export function ReplyDialog({ parentComment, onClose, currentUser, movieId }: Re
         {/* INPUT AREA */}
         <div className="p-6 border-t border-white/10 bg-white/5 backdrop-blur-md">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-[10px] font-bold uppercase text-blue-400 tracking-tighter">
+            <span className="text-[10px] font-bold uppercase text-blue-500 tracking-tighter">
                 {editingId ? "Đang cập nhật phản hồi" : "Viết câu trả lời"}
             </span>
             {editingId && (
@@ -191,7 +191,7 @@ export function ReplyDialog({ parentComment, onClose, currentUser, movieId }: Re
             <button 
               onClick={handleSubmit}
               disabled={createMutation.isPending || updateMutation.isPending}
-              className="bg-blue-600 hover:bg-blue-700 p-4 rounded-xl self-end transition-all active:scale-95 disabled:opacity-50 disabled:active:scale-100"
+              className="bg-blue hover:bg-blue-700 p-4 rounded-xl self-end transition-all active:scale-95 disabled:opacity-50 disabled:active:scale-100"
             >
               {(createMutation.isPending || updateMutation.isPending) ? <Loader2 className="animate-spin" size={18} /> : <Send size={18} />}
             </button>

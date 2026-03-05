@@ -44,7 +44,6 @@ export default function ActorList() {
     const [alphabet, setAlphabet] = useState("");
     const limit = 32;
 
-
     const { data, isLoading } = useActorList({
         page,
         limit,
@@ -59,9 +58,10 @@ export default function ActorList() {
     const pagination = data?.pagination;
 
     return (
-        <div className="space-y-10 flex flex-col justify-center">
-            {/* Thanh bảng chữ cái A-Z */}
-            <div className="flex flex-wrap gap-4 justify-center mb-12">
+        <div className="space-y-12 max-w-7xl mx-auto">
+
+            {/* Alphabet */}
+            <div className="flex flex-wrap gap-4 justify-center">
                 {alphabetImages.map((item) => {
                     const isActive = alphabet === item.alphabet;
 
@@ -72,12 +72,11 @@ export default function ActorList() {
                                 setAlphabet(item.alphabet);
                                 setPage(1);
                             }}
-                            className={`cursor-pointer group relative w-25 h-30 rounded-lg overflow-hidden border-2 transition-all duration-300
-          ${isActive
+                            className={`cursor-pointer group relative w-24 h-28 rounded-lg overflow-hidden border-2 transition-all duration-300
+                            ${isActive
                                     ? "border-primary scale-110"
                                     : "border-gray-700 hover:border-white"
-                                }
-        `}
+                                }`}
                         >
                             {item.img ? (
                                 <>
@@ -86,7 +85,8 @@ export default function ActorList() {
                                         alt={item.alphabet}
                                         className="w-full h-full object-cover brightness-75 group-hover:brightness-100 transition"
                                     />
-                                    <span className="absolute inset-0 flex items-end justify-start pl-0.5 text-white font-bold text-lg">
+
+                                    <span className="absolute inset-0 flex items-end justify-start pl-1 pb-1 text-white font-bold text-lg">
                                         {item.alphabet}
                                     </span>
                                 </>
@@ -100,14 +100,14 @@ export default function ActorList() {
                 })}
             </div>
 
-            {/* Grid container */}
-            <div className="flex flex-wrap gap-x-6 gap-y-10 justify-center sm:justify-start">
+            {/* Actor Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-6">
                 {actors.length > 0 ? (
                     actors.map((actor) => (
                         <ActorCard key={actor._id} actor={actor} />
                     ))
                 ) : (
-                    <div className="text-white w-full text-center py-10 opacity-50">
+                    <div className="text-white col-span-full text-center py-10 opacity-50">
                         Không tìm thấy diễn viên nào bắt đầu bằng "{alphabet}"
                     </div>
                 )}
@@ -115,7 +115,7 @@ export default function ActorList() {
 
             {/* Pagination */}
             {pagination && (
-                <div className="flex justify-center pt-4">
+                <div className="flex justify-center pt-6">
                     <DataPagination
                         page={pagination.page ?? 1}
                         totalPages={pagination.totalPages ?? 1}

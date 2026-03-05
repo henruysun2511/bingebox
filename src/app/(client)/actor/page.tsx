@@ -9,7 +9,7 @@ export default function ActorPage() {
         <>
             <div className="mt-15"></div>
             <ActorBanner />
-            <div className="!max-w-[1400px] mx-auto px-10 py-10">
+            <div className="!max-w-[1400px] mx-auto px-20 py-10">
 
                 <SectionTitle title="Danh sách diễn viên" />
                 <ActorList />
