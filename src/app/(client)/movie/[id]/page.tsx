@@ -14,7 +14,7 @@ import { vi } from "date-fns/locale";
 import { Calendar1, Clock1, Heart } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 
 const formatDate = (date?: string) => {
@@ -87,6 +87,10 @@ export default function MovieDetailPage() {
         }
     };
 
+    const showtimeRef = useRef<HTMLDivElement>(null);
+    const scrollToShowtimes = () => {
+        showtimeRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
 
     if (isLoading) return <div className="text-white p-10">Loading...</div>;
     if (!movie) return <div className="text-white p-10">Movie not found</div>;
@@ -161,9 +165,9 @@ export default function MovieDetailPage() {
                             {/* Content */}
                             <div className="flex-1">
                                 <div className="flex items-center justify-between mb-4">
-                                    <h2 className="text-3xl font-bold">
-                                        {movie.name || "N/A"}
-                                    </h2>
+                                    <h1 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-6 leading-tight bg-gradient-to-r from-white to-neutral-500 bg-clip-text text-transparent">
+                                        {movie.name}
+                                    </h1>
 
                                 </div>
 
@@ -222,12 +226,12 @@ export default function MovieDetailPage() {
                                     </button>
 
                                     {!isComingSoon && (
-                                        <Link
-                                            href={`/booking/${movie._id}`}
+                                        <button
+                                            onClick={scrollToShowtimes}
                                             className="px-6 py-2 rounded-full bg-red-500 hover:opacity-90 transition font-semibold"
                                         >
                                             ĐẶT VÉ
-                                        </Link>
+                                        </button>
                                     )}
 
 
@@ -283,7 +287,7 @@ export default function MovieDetailPage() {
                 </div>
 
 
-                <div className="mb-10">
+                <div className="mb-10" ref={showtimeRef}>
                     <div className="container mx-auto px-6 text-white pb-20">
                         <SectionTitle title="Lịch chiếu" />
                         {isComingSoon ? (
@@ -394,7 +398,6 @@ export default function MovieDetailPage() {
                         </button>
                     </div>
                 </div>
-
 
 
 

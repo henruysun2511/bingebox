@@ -55,7 +55,7 @@ export default function MovieCard({ movie, status }: MovieCardProps) {
                     {/* Buy Ticket */}
                     {status === MovieStatusEnum.NOW_SHOWING && (
                         <div className="absolute bottom-5 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition duration-300">
-                            <Link href={`/booking/${_id}`}>
+                            <Link href={`/showtime/movie/${_id}`}>
                                 <button className="flex items-center whitespace-nowrap gap-2 bg-blue hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-sm font-medium shadow-lg transition">
                                     <Ticket className="w-4 h-4" />
                                     MUA VÉ NGAY

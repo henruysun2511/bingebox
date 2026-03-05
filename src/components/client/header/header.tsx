@@ -7,10 +7,11 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
+  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  navigationMenuTriggerStyle,
+  NavigationMenuTrigger
 } from "@/components/ui/navigation-menu";
 import {
   Sheet,
@@ -24,7 +25,14 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import { toast } from "sonner";
 
 const menuItems = [
-  { title: "Lịch chiếu", href: "/showtime" },
+  {
+    title: "Lịch chiếu",
+    href: "/showtime",
+    children: [
+      { title: "Theo phim", href: "/showtime/movie" },
+      { title: "Theo rạp", href: "/showtime/cinema" },
+    ]
+  },
   { title: "Tin tức", href: "/blog" },
   { title: "Giá vé", href: "/price" },
   { title: "Diễn viên", href: "/actor" },
@@ -110,14 +118,35 @@ export default function Header({ logo }: { logo: string }) {
           <NavigationMenuList>
             {menuItems.map((item) => (
               <NavigationMenuItem key={item.href}>
-                <NavigationMenuLink asChild>
-                  <Link
-                    href={item.href}
-                    className={`${navigationMenuTriggerStyle()} bg-transparent text-white hover:bg-blue-700 hover:text-white h-20 px-4 rounded-none transition-colors`}
-                  >
-                    <div className="text-sm">{item.title}</div>
-                  </Link>
-                </NavigationMenuLink>
+                {item.children ? (
+                  <>
+                    <NavigationMenuTrigger className="bg-transparent text-white hover:bg-blue-700 h-20 px-4 rounded-none">
+                      {item.title}
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent className="bg-blue border-none">
+                      <ul className="grid w-[200px] gap-2 p-4">
+                        {item.children.map((child) => (
+                          <li key={child.href}>
+                            <NavigationMenuLink asChild>
+                              <Link
+                                href={child.href}
+                                className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-blue-700 hover:text-white text-white"
+                              >
+                                {child.title}
+                              </Link>
+                            </NavigationMenuLink>
+                          </li>
+                        ))}
+                      </ul>
+                    </NavigationMenuContent>
+                  </>
+                ) : (
+                  <NavigationMenuLink asChild>
+                    <Link href={item.href} className="...">
+                      {item.title}
+                    </Link>
+                  </NavigationMenuLink>
+                )}
               </NavigationMenuItem>
             ))}
           </NavigationMenuList>

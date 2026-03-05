@@ -7,6 +7,7 @@ import { BaseStatusEnum } from "@/constants/enum";
 import { useGetSettings } from "@/queries/useSettingQuery";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import BlogBanner from "./blog-banner";
 
 export default function BlogPage() {
     const { data: setting, isLoading } = useGetSettings();
@@ -55,7 +56,8 @@ export default function BlogPage() {
                     )}
                 </DialogContent>
             </Dialog>
-
+            <div className="mt-15"></div>
+            <BlogBanner />
             <div className="!max-w-[1400px] mx-auto px-10 py-20">
                 <SectionTitle title="Bài viết nổi bật" />
                 <BlogList />
