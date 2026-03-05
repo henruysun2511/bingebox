@@ -12,6 +12,7 @@ import { useGetSettings } from "@/queries/useSettingQuery";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import ExpertReviews from "./expert-review";
+import QuickTicketBuying from "./quick-ticket-buying";
 
 export default function Home() {
   const { data: setting, isLoading } = useGetSettings();
@@ -66,7 +67,11 @@ export default function Home() {
       {/* MAIN CONTENT */}
       <Carousel images={activeBanners} />
 
+
       <div className="!max-w-[1400px] mx-auto px-10 py-10">
+        <div className="relative z-5 -mt-15"> {/* -mt-10 nếu bạn muốn nó đè một chút lên Banner */}
+          <QuickTicketBuying />
+        </div>
         <div className="flex gap-10 items-start">
           {/* LEFT CONTENT */}
           <div className="flex-1">
@@ -91,7 +96,7 @@ export default function Home() {
           </div>
         </div>
 
-       
+
 
         <BlogSection />
 
