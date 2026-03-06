@@ -32,7 +32,7 @@ export default function Carousel({ images }: CarouselProps) {
     }, [images]);
 
     return (
-        <div className="relative w-full h-[700px] overflow-hidden">
+        <div className="relative w-full mt-10 h-[700px] overflow-hidden">
             {/* Slides */}
             <div
                 className="flex h-full transition-transform duration-700 ease-in-out"

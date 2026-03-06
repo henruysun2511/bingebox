@@ -103,78 +103,79 @@ export default function MovieDetailPage() {
                 content={"Do tác giả lười up lịch chiếu mới, nên mọi người ấn nút demo lịch chiếu để xem lịch chiếu trong quá khứ nhé"}
                 name={"Tác giả"}
                 position=""
-                image={"https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/594967022_1516503276319019_8492803772297431689_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=1d70fc&_nc_eui2=AeEqpj_W1mY3f9Ind2M2MR0MfkBe9wLyyPF-QF73AvLI8bsDO1r5N9BB285-jH05W2M308Iblmz1ZK5GGFRs2rGh&_nc_ohc=pILzs-qRekAQ7kNvwEwW8e2&_nc_oc=Adlh9LfA2cvWf3vbfiwIzaJVIuQXTRCUKLJZXEWULM9Y_XMtTm-7Iz3DSvI5DyIcP5wQbj0ReXWbYj459KfkQKXm&_nc_zt=23&_nc_ht=scontent.fhan2-3.fna&_nc_gid=LzKl7QVKb-gvwX0rmXHRWg&oh=00_Afu7D28RzMsEGMvJVczwBgEt4JBzwau06cBaty9XNR-_-Q&oe=69A4C57C"}
+                image={"https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-6/594967022_1516503276319019_8492803772297431689_n.jpg"}
             />
 
-
-            {/* SECTION 1 - BANNER */}
+            {/* BANNER */}
             <div className="mt-16">
-                <div className="relative h-[620px] w-full overflow-hidden">
+                <div className="relative h-[320px] sm:h-[450px] lg:h-[620px] w-full overflow-hidden">
+
                     <img
                         src={movie.banner || "/fallback.jpg"}
                         alt={movie.name}
                         className="w-full h-full object-cover scale-105"
                     />
 
-                    {/* overlay gradient */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent" />
 
-                    {/* play button */}
                     <div
                         onClick={() => setShowTrailer(true)}
                         className="absolute inset-0 flex items-center justify-center cursor-pointer"
                     >
-                        <div className="text-white text-7xl hover:scale-110 transition duration-300">
+                        <div className="text-white text-5xl sm:text-6xl lg:text-7xl hover:scale-110 transition">
                             ▶
                         </div>
                     </div>
 
-                    <div className="absolute bottom-2 right-2 flex gap-4 items-center">
+                    <div className="absolute bottom-2 right-2 flex gap-3 items-center">
                         <Button
                             onClick={handleToggleLike}
                             disabled={toggleLikeMutation.isPending}
                             variant={isLiked ? "default" : "outline"}
-                            className={`gap-2 ${isLiked ? "bg-red-500 hover:bg-red-600" : "border-neutral-700"}`}
+                            className={`gap-2 ${isLiked ? "bg-red-500 hover:bg-red-600" : "border-neutral-700"
+                                }`}
                         >
-                            <Heart
-                                className={isLiked ? "fill-white" : ""}
-                                size={20}
-                            />
+                            <Heart className={isLiked ? "fill-white" : ""} size={20} />
                             {isLiked ? "Đã thích" : "Thích"}
                         </Button>
-                        <span className="text-sm text-gray-400">
+
+                        <span className="text-xs sm:text-sm text-gray-400">
                             {movie.likeCount || 0} lượt thích
                         </span>
                     </div>
+
                 </div>
             </div>
-            <div className="px-80">
-                {/* SECTION 2 - INFO */}
-                <div className="relative -mt-25 z-10 mb-20">
-                    <div className="container mx-auto px-6">
-                        <div className="flex flex-col items-end lg:flex-row gap-10 text-white">
 
-                            {/* Poster */}
-                            <div className="w-[280px] shrink-0">
+            {/* PAGE CONTAINER */}
+            <div className="px-4 sm:px-10 md:px-16 lg:px-24 xl:px-40 2xl:px-80">
+
+                {/* INFO */}
+                <div className="relative -mt-20 lg:-mt-25 z-10 mb-16 lg:mb-20">
+                    <div className="container mx-auto px-2 sm:px-6">
+
+                        <div className="flex flex-col items-center lg:items-end lg:flex-row gap-6 lg:gap-10 text-white">
+
+                            {/* POSTER */}
+                            <div className="w-[180px] sm:w-[220px] lg:w-[280px] shrink-0">
+
                                 <img
                                     src={movie.poster || "/fallback.jpg"}
                                     alt={movie.name}
-                                    className="w-full h-[400px] object-cover rounded-xl shadow-2xl"
+                                    className="w-full h-[260px] sm:h-[320px] lg:h-[400px] object-cover rounded-xl shadow-2xl"
                                 />
+
                             </div>
 
-                            {/* Content */}
+                            {/* CONTENT */}
                             <div className="flex-1">
-                                <div className="flex items-center justify-between mb-4">
-                                    <h1 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-6 leading-tight bg-gradient-to-r from-white to-neutral-500 bg-clip-text text-transparent">
-                                        {movie.name}
-                                    </h1>
 
-                                </div>
+                                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter mb-6 leading-tight bg-gradient-to-r from-white to-neutral-500 bg-clip-text text-transparent">
+                                    {movie.name}
+                                </h1>
 
+                                <div className="flex flex-wrap gap-6 sm:gap-8 mb-4 text-sm text-white/80">
 
-                                {/* Basic Info */}
-                                <div className="flex flex-wrap gap-8 mb-4 text-sm text-white/80">
                                     <div className="flex items-center gap-2">
                                         <Clock1 className="w-4 h-4" />
                                         {movie.duration || "N/A"} phút
@@ -184,6 +185,7 @@ export default function MovieDetailPage() {
                                         <Calendar1 className="w-4 h-4" />
                                         {formatDate(movie.releaseDate)}
                                     </div>
+
                                 </div>
 
                                 <div className="space-y-2 text-sm text-white/80">
@@ -191,7 +193,7 @@ export default function MovieDetailPage() {
                                     <p>Quốc gia: {movie.nationality || "N/A"}</p>
                                 </div>
 
-                                {/* Category */}
+                                {/* CATEGORY */}
                                 <div className="flex flex-wrap items-center gap-2 mt-4">
                                     <span className="text-white/70">Thể loại:</span>
 
@@ -209,16 +211,16 @@ export default function MovieDetailPage() {
                                     )}
                                 </div>
 
-                                {/* Age */}
+                                {/* AGE */}
                                 <div className="mt-4">
                                     <span className="px-3 py-1 bg-yellow-500 text-black font-semibold rounded-md text-sm">
                                         {movie.agePermission || "N/A"}
                                     </span>
                                 </div>
 
+                                {/* BUTTONS */}
+                                <div className="flex flex-wrap gap-3 sm:gap-4 mt-6">
 
-                                {/* Buttons */}
-                                <div className="flex gap-4 mt-6">
                                     <button
                                         onClick={() => setShowTrailer(true)}
                                         className="px-6 py-2 rounded-full bg-blue hover:opacity-90 transition font-semibold"
@@ -235,31 +237,36 @@ export default function MovieDetailPage() {
                                         </button>
                                     )}
 
-
-
                                 </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* SECTION 3 - DESCRIPTION */}
-                <div className="mb-20">
-                    <div className="container mx-auto px-6 text-white">
+                {/* DESCRIPTION */}
+                <div className="mb-12 sm:mb-16 lg:mb-20">
+
+                    <div className="container mx-auto px-2 sm:px-6 text-white">
+
                         <SectionTitle title="Nội dung" />
 
                         <p className="mt-6 text-white/80 leading-relaxed max-w-4xl">
                             {movie.description || "N/A"}
                         </p>
+
                     </div>
                 </div>
 
-                {/* SECTION 4 - ACTORS */}
-                <div className="mb-24">
-                    <div className="container mx-auto px-6 text-white">
+                {/* ACTORS */}
+                <div className="mb-16 lg:mb-24">
+
+                    <div className="container mx-auto px-2 sm:px-6 text-white">
+
                         <SectionTitle title="Diễn viên" />
 
-                        <div className="flex gap-8 mt-8">
+                        <div className="flex flex-wrap justify-center lg:justify-start gap-6 sm:gap-8 mt-8">
+
                             {movie.actors?.length ? (
                                 movie.actors.map((actor: any) => (
                                     <Link
@@ -267,27 +274,33 @@ export default function MovieDetailPage() {
                                         className="flex flex-col items-center group cursor-pointer"
                                         href={`/actor/${actor._id}`}
                                     >
-                                        <div className="w-[110px] h-[110px] rounded-full overflow-hidden shadow-lg group-hover:scale-105 transition duration-300">
+
+                                        <div className="w-[80px] h-[80px] sm:w-[95px] sm:h-[95px] lg:w-[110px] lg:h-[110px] rounded-full overflow-hidden shadow-lg group-hover:scale-105 transition">
+
                                             <img
                                                 src={actor.avatar || "/avatar-fallback.png"}
                                                 alt={actor.name}
                                                 className="w-full h-full object-cover"
                                             />
+
                                         </div>
 
-                                        <div className="mt-3 text-sm text-center text-white/80">
+                                        <div className="mt-3 text-xs sm:text-sm text-center text-white/80">
                                             {actor.name || "N/A"}
                                         </div>
+
                                     </Link>
                                 ))
                             ) : (
                                 <p>N/A</p>
                             )}
+
                         </div>
+
                     </div>
                 </div>
 
-
+                {/* SHOWTIMES */}
                 <div className="mb-10" ref={showtimeRef}>
                     <div className="container mx-auto px-6 text-white pb-20">
                         <SectionTitle title="Lịch chiếu" />
@@ -304,7 +317,7 @@ export default function MovieDetailPage() {
                             /* HIỂN THỊ LỊCH CHIẾU BÌNH THƯỜNG */
                             <>
                                 {/* DATE TABS */}
-                                <div className="flex gap-4 overflow-x-auto pb-6 scrollbar-hide">
+                                <div className="flex gap-4 overflow-x-auto pb-6 custom-scrollbar ">
                                     {dateTabs.map((date, index) => {
                                         const isSelected = isSameDay(date, selectedDate);
                                         return (
@@ -405,11 +418,11 @@ export default function MovieDetailPage() {
 
 
                 {showPast && (
-                    <div className="mt-16 mb-10  pl-5">
+                    <div className="mt-16 mb-10  pl-5 ">
                         <SectionTitle title="Lịch chiếu trước đây" />
 
                         {/* DATE TABS */}
-                        <div className="flex gap-4 overflow-x-auto pb-6 scrollbar-hide mt-6">
+                        <div className="flex gap-4 overflow-x-auto pb-6 mt-6 custom-scrollbar ">
                             {uniquePastDates.map((date, index) => {
                                 const isSelected =
                                     selectedPastDate &&
@@ -504,26 +517,25 @@ export default function MovieDetailPage() {
 
             </div>
 
-
-
-
             {/* TRAILER MODAL */}
             {showTrailer && (
-                <>
+                <div
+                    className="fixed inset-0 bg-black/70 z-40 flex items-center justify-center px-4"
+                    onClick={() => setShowTrailer(false)}
+                >
                     <div
-                        className="fixed inset-0 bg-black/70 z-40"
-                        onClick={() => setShowTrailer(false)}
-                    />
-                    <div className="fixed top-[20%] left-[25%] z-50">
+                        className="w-full max-w-[860px]"
+                        onClick={(e) => e.stopPropagation()}
+                    >
                         <iframe
-                            width="860"
-                            height="515"
+                            className="w-full aspect-video"
                             src={movie.trailer}
                             allowFullScreen
                         />
                     </div>
-                </>
+                </div>
             )}
         </>
     );
 }
+

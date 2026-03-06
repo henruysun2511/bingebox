@@ -113,7 +113,7 @@ export default function UserUpdateDialog({ open, onClose, user }: Props) {
 
     return (
         <Dialog open={open} onOpenChange={onClose}>
-            <DialogContent className="!max-w-3xl bg-black text-white border-neutral-800 p-0 overflow-hidden flex flex-col max-h-[90vh]">
+            <DialogContent className="!max-w-3xl bg-black text-white border-neutral-800 p-0 overflow-hidden custom-scrollbar flex flex-col max-h-[90vh]">
                 <div className="overflow-y-auto p-8">
                     <DialogHeader className="mb-6">
                         <DialogTitle className="text-2xl font-bold uppercase">

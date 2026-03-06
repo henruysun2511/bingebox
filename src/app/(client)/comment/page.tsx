@@ -156,7 +156,7 @@ export default function CommentPage() {
             <div className="min-h-screen text-white pb-20">
 
 
-                <div className="max-w-[1400px] mx-auto px-20 grid grid-cols-1 lg:grid-cols-12 gap-10 mt-15 relative z-10">
+                <div className="max-w-[1400px] mx-auto px-4 md:px-10 lg:px-20 grid grid-cols-1 lg:grid-cols-12 gap-10 mt-15 relative z-10">
 
                     {/* LEFT SIDEBAR: MOVIE GRID */}
                     <div className="lg:col-span-3 space-y-6">

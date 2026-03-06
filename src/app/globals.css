@@ -299,25 +299,17 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    180deg,
-    rgba(59,130,246,0.6),
-    rgba(99,102,241,0.6)
-  );
+  background: var(--color-blue);
   border-radius: 9999px;
   transition: all 0.3s ease;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(
-    180deg,
-    rgba(59,130,246,0.9),
-    rgba(99,102,241,0.9)
-  );
+  background: var(--color-blue);
 }
 
 /* Firefox */
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: rgba(99,102,241,0.6) transparent;
+  scrollbar-color: var(--color-blue) transparent;
 }

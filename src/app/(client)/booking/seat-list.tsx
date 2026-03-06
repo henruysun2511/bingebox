@@ -105,7 +105,7 @@ export default function SeatListClient({ showtimeId, selectedSeats, setSelectedS
     if (isLoading) return <div className="text-center py-20 italic text-neutral-500">Đang tải sơ đồ ghế...</div>;
 
     return (
-        <div className="flex flex-col items-center w-full py-8">
+        <div className="flex flex-col items-center w-full py-8 ">
             {/* Màn hình */}
             <div className="w-full max-w-2xl mb-16">
                 <div className="w-full h-1.5 bg-blue shadow-[0_0_20px_#0066FF] rounded-full mb-4" />
@@ -113,24 +113,30 @@ export default function SeatListClient({ showtimeId, selectedSeats, setSelectedS
             </div>
 
             {/* Danh sách ghế */}
-            <div className="space-y-3 inline-block">
-                {rows.map((row) => (
-                    <div key={row.rowKey} className="flex items-center gap-4">
-                        {/* Tên hàng ghế (A, B, C...) */}
-                        <div className="w-6 font-bold text-neutral-600 text-sm">{row.rowKey}</div>
+            <div className="w-full overflow-x-auto pb-6 cursor-grab active:cursor-grabbing custom-scrollbar">
+                <div className="flex flex-col items-center min-w-max mx-auto px-4">
+                    <div className="space-y-3 inline-block">
+                        {rows.map((row) => (
+                            <div key={row.rowKey} className="flex items-center gap-4">
+                                {/* Tên hàng ghế */}
+                                <div className="w-6 font-bold text-neutral-600 text-sm sticky left-0 bg-transparent backdrop-blur-sm z-10">
+                                    {row.rowKey}
+                                </div>
 
-                        <div className="flex gap-1.5">
-                            {row.seats.map((seat: any) => (
-                                <SeatItemClient
-                                    key={seat._id}
-                                    seat={seat}
-                                    isSelected={selectedSeats.some((s) => s._id === seat._id)}
-                                    onClick={() => toggleSeat(seat)}
-                                />
-                            ))}
-                        </div>
+                                <div className="flex gap-1.5">
+                                    {row.seats.map((seat: any) => (
+                                        <SeatItemClient
+                                            key={seat._id}
+                                            seat={seat}
+                                            isSelected={selectedSeats.some((s) => s._id === seat._id)}
+                                            onClick={() => toggleSeat(seat)}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                ))}
+                </div>
             </div>
 
             {/* Chú thích (Legend) */}

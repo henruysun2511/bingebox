@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 // Shadcn Components
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -164,28 +165,59 @@ export default function Header({ logo }: { logo: string }) {
         <div className="lg:hidden">
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" className="text-white p-0 hover:bg-transparent">
+              <Button variant="ghost" className="text-white p-0 hover:bg-transparent active:scale-95 transition-transform">
                 <Menu className="h-8 w-8" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="top" className="bg-[#2e4ba6] border-none text-white">
-              <SheetHeader>
-                <SheetTitle className="text-white text-left">MENU</SheetTitle>
+            <SheetContent side="right" className="bg-blue border-l border-white/10 text-white w-[300px] p-0">
+              <SheetHeader className="p-6 border-b border-white/10 bg-blue">
+                <SheetTitle className="text-white text-left flex items-center gap-2">
+                  <img src={logo} alt="Logo" className="h-8 w-auto" />
+                  <span className="text-sm font-bold tracking-tighter">BINGEBOX</span>
+                </SheetTitle>
               </SheetHeader>
-              <div className="flex flex-col gap-4 mt-8">
-                <ul className="flex flex-col gap-2">
-                  {menuItems.map((item) => (
-                    <li key={item.href}>
-                      <Link
-                        href={item.href}
-                        className="block py-3 px-4 hover:bg-blue-700 rounded-md transition-colors"
-                      >
-                        {item.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-                {renderAuthButtons(true)}
+
+              <div className="flex flex-col h-[calc(100vh-80px)] justify-between p-4">
+                <div className="overflow-y-auto">
+                  <Accordion type="single" collapsible className="w-full border-none">
+                    {menuItems.map((item) => (
+                      <AccordionItem key={item.href} value={item.href} className="border-none">
+                        {item.children ? (
+                          <>
+                            <AccordionTrigger className="py-3 px-4 hover:bg-white/5 rounded-lg hover:no-underline text-sm font-medium">
+                              {item.title}
+                            </AccordionTrigger>
+                            <AccordionContent className="pl-6 pb-2 pt-1 flex flex-col gap-1">
+                              {item.children.map((child) => (
+                                <Link
+                                  key={child.href}
+                                  href={child.href}
+                                  className="block py-2.5 px-4 text-sm text-white/70 hover:text-white hover:bg-white/5 rounded-md transition-colors"
+                                >
+                                  {child.title}
+                                </Link>
+                              ))}
+                            </AccordionContent>
+                          </>
+                        ) : (
+                          <Link
+                            href={item.href}
+                            className="flex py-3 px-4 text-sm font-medium hover:bg-white/5 rounded-lg transition-colors"
+                          >
+                            {item.title}
+                          </Link>
+                        )}
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                </div>
+
+                {/* Footer của Mobile Menu: Auth Buttons */}
+                <div className="pt-6 border-t border-white/10 mt-auto">
+                  <div className="flex flex-col gap-3">
+                    {renderAuthButtons(true)}
+                  </div>
+                </div>
               </div>
             </SheetContent>
           </Sheet>

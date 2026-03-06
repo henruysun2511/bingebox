@@ -70,12 +70,13 @@ export default function Home() {
 
 
       <div className="!max-w-[1400px] mx-auto px-10 py-10">
-        <div className="relative z-5 -mt-15"> {/* -mt-10 nếu bạn muốn nó đè một chút lên Banner */}
+        <div className="relative z-5 -mt-14">
           <QuickTicketBuying />
         </div>
-        <div className="flex gap-10 items-start">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start">
+
           {/* LEFT CONTENT */}
-          <div className="flex-1">
+          <div className="flex-1 w-full">
             <SectionTitle title="Phim đang chiếu" />
             <MovieNowShowingList />
 
@@ -84,8 +85,9 @@ export default function Home() {
           </div>
 
           {/* RIGHT SIDEBAR */}
-          <div className="w-[260px] shrink-0">
+          <div className="w-full lg:w-[260px] shrink-0">
             <SectionTitle title="Khuyến mãi" />
+
             <PromotionList
               promotions={[
                 "/images/promo1.jpg",
@@ -95,6 +97,7 @@ export default function Home() {
               ]}
             />
           </div>
+
         </div>
 
 

@@ -1,5 +1,6 @@
 "use client";
 
+import LoadingScreen from "@/components/common/loading/loading-screen";
 import { useGetMe } from "@/queries/useUserQuery";
 import { format } from "date-fns";
 import {
@@ -24,9 +25,7 @@ export default function ProfilePage() {
 
     if (!user)
         return (
-            <div className="min-h-screen flex items-center justify-center bg-black text-white">
-                Loading...
-            </div>
+            <LoadingScreen />
         );
 
     return (

@@ -97,23 +97,23 @@ export default function MovieCard({ movie, status }: MovieCardProps) {
                 </p>
             </div >
 
-            {showTrailer && (
-                <>
+           {showTrailer && (
+                <div
+                    className="fixed inset-0 bg-black/70 z-40 flex items-center justify-center px-4"
+                    onClick={() => setShowTrailer(false)}
+                >
                     <div
-                        className="fixed inset-0 bg-black/70 z-40"
-                        onClick={() => setShowTrailer(false)}
-                    />
-                    <div className="fixed top-[20%] left-[25%] z-50">
+                        className="w-full max-w-[860px]"
+                        onClick={(e) => e.stopPropagation()}
+                    >
                         <iframe
-                            width="860"
-                            height="515"
-                            src={trailer}
+                            className="w-full aspect-video"
+                            src={movie.trailer}
                             allowFullScreen
                         />
                     </div>
-                </>
-            )
-            }
+                </div>
+            )}
         </>
 
     );
