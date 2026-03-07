@@ -29,6 +29,7 @@ export default function MovieCard({ movie, status }: MovieCardProps) {
     });
 
     const [showTrailer, setShowTrailer] = useState(false);
+    console.log(trailer)
 
 
     return (
@@ -108,7 +109,7 @@ export default function MovieCard({ movie, status }: MovieCardProps) {
                     >
                         <iframe
                             className="w-full aspect-video"
-                            src={movie.trailer}
+                            src={trailer}
                             allowFullScreen
                         />
                     </div>
