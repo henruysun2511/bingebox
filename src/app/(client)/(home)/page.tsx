@@ -26,8 +26,6 @@ export default function Home() {
         (p: any) => p.isActive === BaseStatusEnum.ACTIVE
       );
 
-      console.log("POPUP:", popup);
-
       if (popup) {
         setActivePopup(popup);
         setOpenPopup(true);
