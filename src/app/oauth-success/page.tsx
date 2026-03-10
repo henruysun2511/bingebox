@@ -28,7 +28,7 @@ export default function OAuthSuccessPage() {
     })
       .then((res) => res.json())
       .then((data) => {
-        const user = data.data.user;
+        const user = data?.data?.user ?? data?.data ?? data?.user;
         console.log("user từ API:", user);  // ← user có đúng field không?
 
         setAuth(
