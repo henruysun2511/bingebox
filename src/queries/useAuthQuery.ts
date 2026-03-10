@@ -1,3 +1,4 @@
+import { expires } from "@/constants/expires";
 import { authService } from "@/services/auth.service";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -29,7 +30,7 @@ export function useLogin() {
         onSuccess: (res) => {
             const { username, role, avatar, accessToken } = res.data.data;
             setAuth({ username, role, avatar}, accessToken);
-            Cookies.set('accessToken', accessToken, { expires: 7 });
+            Cookies.set('accessToken', accessToken, { expires: expires });
         },
     });
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { expires } from "@/constants/expires";
 import { useAuthStore } from "@/stores/useAuthStore";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
@@ -18,7 +19,7 @@ export default function OAuthSuccessPage() {
       return;
     }
 
-    Cookies.set("accessToken", accessToken, { expires: 7 });
+    Cookies.set("accessToken", accessToken, { expires: expires });
 
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/me`, {
       headers: {

@@ -2,35 +2,23 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import axios, { InternalAxiosRequestConfig } from "axios";
 import qs from "qs";
 
-// Instance này CHỈ dùng để gọi refresh token, không đính kèm Interceptor đính token cũ
 export const refreshApi = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   withCredentials: true,
-  headers: {
-    Accept: "application/json",
-  },
+  headers: { Accept: "application/json" },
 });
 
-// ===== Main API =====
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   withCredentials: true,
-  headers: {
-    Accept: "application/json",
-  },
+  headers: { Accept: "application/json" },
   paramsSerializer: (params) =>
-    qs.stringify(params, {
-      arrayFormat: "repeat", // 👈 CỐT LÕI
-    }),
+    qs.stringify(params, { arrayFormat: "repeat" }),
 });
 
 // ===== Request interceptor =====
 api.interceptors.request.use((config) => {
-  const { accessToken, isHydrated } = useAuthStore.getState();
-
-  if (!isHydrated) {
-    return config; // chờ hydrate xong
-  }
+  const { accessToken } = useAuthStore.getState();
 
   if (accessToken && config.headers) {
     config.headers.Authorization = `Bearer ${accessToken}`;
@@ -51,6 +39,14 @@ api.interceptors.response.use(
     };
 
     if (error.response?.status === 401 && !originalRequest._retry) {
+
+      // ✅ FIX 1: Nếu chính refresh-token bị 401 → logout ngay, không retry
+      if (originalRequest.url?.includes("/auth/refresh-token")) {
+        useAuthStore.getState().logout();
+        localStorage.removeItem("auth-storage");
+        return Promise.reject(error);
+      }
+
       originalRequest._retry = true;
 
       if (isRefreshing) {
@@ -68,6 +64,7 @@ api.interceptors.response.use(
         const res = await refreshApi.post("/auth/refresh-token");
         const newToken = res.data.data.accessToken;
 
+        // ✅ FIX 2: Sync token vào cả store lẫn cookie cùng lúc
         useAuthStore.getState().setAccessToken(newToken);
 
         queue.forEach((cb) => cb(newToken));
@@ -78,7 +75,6 @@ api.interceptors.response.use(
       } catch (err) {
         queue = [];
         useAuthStore.getState().logout();
-        // window.location.href = "/auth/login";
         localStorage.removeItem("auth-storage");
         return Promise.reject(err);
       } finally {
