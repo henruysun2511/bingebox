@@ -29,16 +29,16 @@ export default function OAuthSuccessPage() {
       .then((res) => res.json())
       .then((data) => {
         const user = data.data.user;
-        console.log(user);
+        console.log("user từ API:", user);  // ← user có đúng field không?
 
         setAuth(
-          {
-            username: user.username,
-            role: user.role,
-            avatar: user.avatar,
-          },
+          { username: user.username, role: user.role, avatar: user.avatar },
           accessToken
         );
+
+        // Kiểm tra store ngay sau khi set
+        console.log("store sau setAuth:", useAuthStore.getState());  // ← có user chưa?
+        console.log("localStorage:", localStorage.getItem("auth-storage")); // ← đã ghi chưa?
 
         window.location.href = "/";
       })
@@ -46,8 +46,8 @@ export default function OAuthSuccessPage() {
   }, [router, setAuth]);
 
   return (
-     <div className="fixed inset-0 z-15 flex items-center justify-center bg-[#050505]">
-      
+    <div className="fixed inset-0 z-15 flex items-center justify-center bg-[#050505]">
+
       <div className="flex flex-col items-center gap-6">
         {/* Logo */}
         <img
@@ -58,7 +58,7 @@ export default function OAuthSuccessPage() {
 
         {/* Loading text */}
         <p className="text-gray-400 text-sm tracking-widest uppercase animate-pulse">
-         Đang đăng nhập với Google...
+          Đang đăng nhập với Google...
         </p>
 
         {/* Progress line */}
