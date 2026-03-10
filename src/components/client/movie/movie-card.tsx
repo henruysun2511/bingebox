@@ -29,8 +29,6 @@ export default function MovieCard({ movie, status }: MovieCardProps) {
     });
 
     const [showTrailer, setShowTrailer] = useState(false);
-    console.log(trailer)
-
 
     return (
         <>
