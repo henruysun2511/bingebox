@@ -1,7 +1,8 @@
+"use client";
 export default function LoadingScreen() {
   return (
     <div className="fixed inset-0 z-5 flex items-center justify-center bg-[#050505]">
-      
+
       <div className="flex flex-col items-center gap-6">
         {/* Logo */}
         <img
