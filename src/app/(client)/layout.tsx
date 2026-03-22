@@ -6,9 +6,8 @@ import { ReactNode } from "react";
 
 
 export default function ClientLayout({ children }: { children: ReactNode }) {
-  const { data: settings, isLoading } = useGetSettings();
+  const { data: settings } = useGetSettings();
 
-  if (isLoading) return null;
 
   return (
     <div className="min-h-screen flex flex-col">

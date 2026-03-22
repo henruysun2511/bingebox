@@ -5,7 +5,6 @@ import Carousel from "@/components/client/carousel/carousel";
 import MovieComingSoonList from "@/components/client/movie/movie-comingsoon-list";
 import MovieNowShowingList from "@/components/client/movie/movie-nowshowing-list";
 import PromotionList from "@/components/client/promotion/promotion-list";
-import LoadingScreen from "@/components/common/loading/loading-screen";
 import SectionTitle from "@/components/common/title/section-title";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { BaseStatusEnum } from "@/constants/enum";
@@ -16,7 +15,7 @@ import ExpertReviews from "./expert-review";
 import QuickTicketBuying from "./quick-ticket-buying";
 
 export default function Home() {
-  const { data: setting, isLoading } = useGetSettings();
+  const { data: setting } = useGetSettings();
   const [openPopup, setOpenPopup] = useState(false);
   const [activePopup, setActivePopup] = useState<{ image: string; link: string } | null>(null);
 
@@ -33,7 +32,6 @@ export default function Home() {
     }
   }, [setting]);
 
-  if (isLoading) return <LoadingScreen />;
 
   const activeBanners =
     setting?.banner
