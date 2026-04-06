@@ -78,7 +78,7 @@ export default function AboutUs() {
 
                         {isLoadingDetail ? (
                             <div className="flex justify-center py-20">
-                                <Loader2 className="animate-spin text-yellow-400" size={40} />
+                                <Loader2 className="animate-spin text-blue-500" size={40} />
                             </div>
                         ) : cinemaDetail ? (
 

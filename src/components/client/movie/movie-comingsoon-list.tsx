@@ -1,4 +1,4 @@
-import MovieCardSkeleton from "@/components/common/skeleton/movie-card-seketon";
+import MovieCardSkeleton from "@/components/common/skeleton/movie-card-skeleton";
 import { MovieStatusEnum } from "@/constants/enum";
 import { useMovieList } from "@/queries/useMovieQuery";
 import MovieCard from "./movie-card";

@@ -1,4 +1,4 @@
-import MovieCardSkeleton from "@/components/common/skeleton/movie-card-seketon";
+import MovieCardSkeleton from "@/components/common/skeleton/movie-card-skeleton";
 import { useFavouriteMovies } from "@/queries/useMovieQuery";
 import Link from "next/link";
 
