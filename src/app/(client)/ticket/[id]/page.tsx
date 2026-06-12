@@ -83,7 +83,7 @@ export default function TicketDetailPage() {
                     <div className="text-blue font-semibold mb-2">Ghế</div>
                     <div className="bg-gray-100 rounded-xl p-4">
                         <div className="font-semibold text-lg">
-                            {ticket.seat.code}
+                            {ticket.seat?.code || "N/A"}
                         </div>
                         <div className="text-gray-600">
                             {ticket.seat?.seatType?.name || "Thường"}

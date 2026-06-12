@@ -1,4 +1,4 @@
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 
 interface PaginationProps {
   page: number;
@@ -13,6 +13,21 @@ export function DataPagination({
 }: PaginationProps) {
   if (totalPages < 1) return null;
 
+  const getPageNumbers = () => {
+    const pages: (number | "ellipsis")[] = [];
+    const siblingCount = 2;
+    const start = Math.max(2, page - siblingCount);
+    const end = Math.min(totalPages - 1, page + siblingCount);
+
+    pages.push(1);
+    if (start > 2) pages.push("ellipsis");
+    for (let i = start; i <= end; i++) pages.push(i);
+    if (end < totalPages - 1) pages.push("ellipsis");
+    if (totalPages > 1) pages.push(totalPages);
+
+    return pages;
+  };
+
   return (
     <Pagination>
       <PaginationContent>
@@ -26,24 +41,27 @@ export function DataPagination({
           />
         </PaginationItem>
 
-        {Array.from({ length: totalPages }).map((_, i) => {
-          const p = i + 1;
-          return (
-            <PaginationItem key={p}>
+        {getPageNumbers().map((item, idx) =>
+          item === "ellipsis" ? (
+            <PaginationItem key={`ellipsis-${idx}`}>
+              <PaginationEllipsis />
+            </PaginationItem>
+          ) : (
+            <PaginationItem key={item}>
               <PaginationLink
                 href="#"
-                isActive={p === page}
+                isActive={item === page}
                 onClick={(e) => {
                   e.preventDefault();
-                  onPageChange(p);
+                  onPageChange(item);
                 }}
                 className="px-3 py-1 bg-white/5 hover:bg-white/10 rounded-md border border-white/10 data-[active=true]:bg-blue data-[active=true]:border-blue data-[active=true]:text-white"
               >
-                {p}
+                {item}
               </PaginationLink>
             </PaginationItem>
-          );
-        })}
+          )
+        )}
 
         <PaginationItem>
           <PaginationNext
