@@ -104,7 +104,7 @@ export default function OrderSummary({
     };
 
     return (
-        <div className="w-full lg:w-[450px] bg-[#0a0a0a] rounded-xl p-6 shadow-2xl border border-neutral-900 sticky top-24 h-fit">
+        <div className="w-full lg:w-[450px] bg-card rounded-xl p-6 shadow-2xl border border-neutral-900 sticky top-24 h-fit">
             {/* Header: Poster & Info */}
             <div className="flex gap-4 mb-6">
                 <div className="w-[120px] h-[180px] flex-shrink-0 overflow-hidden rounded-lg shadow-lg">

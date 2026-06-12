@@ -32,13 +32,13 @@ export default function ProfilePage() {
         <div className="min-h-screen text-white pb-20">
 
             {/* ================= BANNER ================= */}
-            <div className="relative h-[500px] w-full mt-16 overflow-hidden">
+            <div className="relative h-[500px] w-full mt-15 overflow-hidden">
                 <img
                     src={user.banner}
                     className="w-full h-full object-cover"
                     alt="Banner"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0b0b25] via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-overlay via-transparent to-transparent" />
             </div>
 
             {/* ================= AVATAR + BASIC INFO ================= */}
@@ -48,8 +48,8 @@ export default function ProfilePage() {
                     <img
                         src={user.avatar}
                         className="w-56 h-56 rounded-full 
-                       border-[6px] border-blue-500
-                       shadow-[0_0_40px_rgba(255,200,0,0.6)] 
+                       border-[6px] border-blue
+                       shadow-[0_0_40px_rgba(0,74,173,0.6)] 
                        object-cover bg-neutral-900"
                         alt="Avatar"
                     />
@@ -86,15 +86,12 @@ export default function ProfilePage() {
 
                 {/* ===== LEFT COLUMN ===== */}
                 <div className="lg:col-span-4">
-                    <div className="bg-gradient-to-br 
-                          from-[#1f1f4a] 
-                          via-[#2a2a6a] 
-                          to-[#3b3bb3]
+                    <div className="bg-white/5
                           p-8 rounded-3xl
                           border border-white/10
                           shadow-[0_10px_40px_rgba(0,0,0,0.6)]">
 
-                        <h2 className="text-3xl font-bold text-yellow-400 text-center mb-6">
+                        <h2 className="text-3xl font-bold text-blue text-center mb-6">
                             Thông tin chung
                         </h2>
 
@@ -135,16 +132,14 @@ export default function ProfilePage() {
                         ].map((stat, i) => (
                             <div
                                 key={i}
-                                className="bg-gradient-to-br 
-                           from-[#23235c] 
-                           to-[#3c3cb8]
-                           p-8 rounded-2xl 
-                           text-center 
-                           border border-white/10
-                           shadow-[0_8px_30px_rgba(0,0,0,0.5)] 
-                           hover:scale-105 transition-all duration-300"
+                                className="bg-white/5
+                            p-8 rounded-2xl 
+                            text-center 
+                            border border-white/10
+                            shadow-[0_8px_30px_rgba(0,0,0,0.5)] 
+                            hover:scale-105 transition-all duration-300"
                             >
-                                <div className="text-yellow-400 flex justify-center mb-3 text-2xl">
+                                <div className="text-blue flex justify-center mb-3 text-2xl">
                                     {stat.icon}
                                 </div>
                                 <h3 className="text-2xl font-bold">{stat.value}</h3>
@@ -154,7 +149,7 @@ export default function ProfilePage() {
                     </div>
 
                     {/* ===== TABS ===== */}
-                    <div className="flex border-b border-yellow-500/50 mb-8 overflow-x-auto">
+                    <div className="flex border-b border-blue/50 mb-8 overflow-x-auto">
                         {[
                             { id: "my-info", label: "Thông tin chi tiết" },
                             { id: "my-ticket", label: "Vé của tôi" },
@@ -165,7 +160,7 @@ export default function ProfilePage() {
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
                                 className={`px-6 py-3 font-semibold transition-all whitespace-nowrap ${activeTab === tab.id
-                                    ? "bg-yellow-500 text-black rounded-t-xl"
+                                    ? "bg-blue text-white rounded-t-xl"
                                     : "text-white/70 hover:text-white hover:bg-white/5"
                                     }`}
                             >
@@ -175,12 +170,8 @@ export default function ProfilePage() {
                     </div>
 
                     {/* ===== TAB CONTENT ===== */}
-
-
                     {activeTab === "my-info" && (
-                        <div className="bg-gradient-to-br 
-                          from-[#1f1f4a] 
-                          to-[#3535a3]
+                        <div className="bg-white/5
                           p-10 rounded-3xl 
                           border border-white/10
                           shadow-2xl">
@@ -211,7 +202,7 @@ export default function ProfilePage() {
                                 <div className="pt-8 border-t border-white/10 flex justify-center">
                                     <button
                                         onClick={() => setIsUpdateDialogOpen(true)}
-                                        className="bg-yellow-500 text-black px-10 py-3 rounded-xl font-bold hover:bg-yellow-400 transition"
+                                        className="bg-blue text-white px-10 py-3 rounded-xl font-bold hover:opacity-90 transition"
                                     >
                                         CHỈNH SỬA THÔNG TIN
                                     </button>
@@ -227,20 +218,18 @@ export default function ProfilePage() {
                     )}
                     {activeTab === "my-movie" && (
                         <div className="space-y-6">
-                            <div className="text-2xl font-bold text-yellow-400 mb-4">
+                            <div className="text-2xl font-bold text-blue mb-4">
                                 Phim đã xem
                             </div>
                             <UserMovieWatchedList />
-                            <div className="text-2xl font-bold text-yellow-400 mb-4 mt-10">
+                            <div className="text-2xl font-bold text-blue mb-4 mt-10">
                                 Phim yêu thích
                             </div>
                             <UserMovieFavouriteList />
                         </div>
                     )}
                     {activeTab === "my-password" && (
-                        <div className="bg-gradient-to-br 
-                          from-[#1f1f4a] 
-                          to-[#3535a3]
+                        <div className="bg-white/5
                           p-10 rounded-3xl 
                           border border-white/10
                           shadow-2xl">
@@ -248,7 +237,7 @@ export default function ProfilePage() {
                                 <div className="pt-8 border-t border-white/10 flex justify-center">
                                     <button
                                         onClick={() => setIsPasswordDialogOpen(true)}
-                                        className="bg-yellow-500 text-black px-10 py-3 rounded-xl font-bold hover:bg-yellow-400 transition"
+                                        className="bg-blue text-white px-10 py-3 rounded-xl font-bold hover:opacity-90 transition"
                                     >
                                         Đổi mật khẩu
                                     </button>

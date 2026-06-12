@@ -108,7 +108,7 @@ export default function MovieDetailPage() {
 
             {/* BANNER */}
             <div className="mt-16">
-                <div className="relative h-[320px] sm:h-[450px] lg:h-[620px] w-full overflow-hidden">
+                <div data-theme-fixed className="relative h-[320px] sm:h-[450px] lg:h-[620px] w-full overflow-hidden">
 
                     <img
                         src={movie.banner || "/fallback.jpg"}
@@ -219,7 +219,7 @@ export default function MovieDetailPage() {
                                 </div>
 
                                 {/* BUTTONS */}
-                                <div className="flex flex-wrap gap-3 sm:gap-4 mt-6">
+                                <div data-theme-fixed className="flex flex-wrap gap-3 sm:gap-4 mt-6">
 
                                     <button
                                         onClick={() => setShowTrailer(true)}

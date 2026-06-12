@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function MovieCardSkeleton() {
   return (
-    <div className="w-[230px] ">
+    <div className="w-full">
       {/* Poster */}
       <Skeleton className="h-[320px] w-full rounded-xl bg-neutral-800" />
 

@@ -333,16 +333,21 @@ export default function SettingPage() {
                                         control={form.control}
                                         name={`banner.${index}.isActive`}
                                         render={({ field }) => (
-                                            <div className="flex items-center justify-between px-1">
-                                                <span className="text-[10px] uppercase font-bold text-neutral-500">Kích hoạt</span>
-                                                <Switch
-                                                    checked={field.value === BaseStatusEnum.ACTIVE}
-                                                    onCheckedChange={(v) =>
-                                                        field.onChange(v ? BaseStatusEnum.ACTIVE : BaseStatusEnum.INACTIVE)
-                                                    }
-                                                    disabled={!isEdit}
-                                                    className="scale-75 origin-right" // Làm nhỏ switch lại cho gọn
-                                                />
+                                            <div className="flex items-center justify-between bg-neutral-900/80 p-2 rounded border border-neutral-800">
+                                                <span className="text-xs font-medium text-neutral-400 uppercase tracking-wider">Kích hoạt</span>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-[10px] text-neutral-500">
+                                                        {field.value === BaseStatusEnum.ACTIVE ? "Đang bật" : "Đang tắt"}
+                                                    </span>
+                                                    <Switch
+                                                        checked={field.value === BaseStatusEnum.ACTIVE}
+                                                        onCheckedChange={(v) =>
+                                                            field.onChange(v ? BaseStatusEnum.ACTIVE : BaseStatusEnum.INACTIVE)
+                                                        }
+                                                        disabled={!isEdit}
+                                                        className="switch-custom"
+                                                    />
+                                                </div>
                                             </div>
                                         )}
                                     />
@@ -459,7 +464,7 @@ export default function SettingPage() {
                                                             field.onChange(v ? BaseStatusEnum.ACTIVE : BaseStatusEnum.INACTIVE)
                                                         }
                                                         disabled={!isEdit}
-                                                        className="scale-75"
+                                                        className="switch-custom"
                                                     />
                                                 </div>
                                             </div>

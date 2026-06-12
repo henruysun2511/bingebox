@@ -101,7 +101,7 @@ export default function PaymentDetailPage() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* CỘT TRÁI: THÔNG TIN VÉ & QR */}
                 <div className="lg:col-span-2 space-y-6">
-                    <div className="bg-[#0a0a0a] border border-neutral-900 rounded-2xl p-6 shadow-xl">
+                    <div className="bg-card border border-neutral-900 rounded-2xl p-6 shadow-xl">
                         <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
                             <Ticket className="text-blue" /> Chi tiết vé của bạn
                         </h2>
@@ -120,7 +120,7 @@ export default function PaymentDetailPage() {
                         </div>
                     </div>
 
-                    <div className="bg-[#0a0a0a] border border-neutral-900 rounded-2xl p-6 shadow-xl">
+                    <div className="bg-card border border-neutral-900 rounded-2xl p-6 shadow-xl">
                         <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
                             <Utensils className="text-orange-500" /> Đồ ăn kèm
                         </h2>
@@ -141,7 +141,7 @@ export default function PaymentDetailPage() {
 
                 {/* CỘT PHẢI: TÓM TẮT THANH TOÁN */}
                 <div className="space-y-6">
-                    <div className="bg-[#0a0a0a] border border-neutral-900 rounded-2xl p-6 shadow-xl sticky top-28">
+                    <div className="bg-card border border-neutral-900 rounded-2xl p-6 shadow-xl sticky top-28">
                         <div className="mb-6">
                             <h3 className="text-xl font-bold text-white uppercase mb-2">{booking.showtime.movie.name}</h3>
                             <div className="flex items-center gap-2 text-sm text-neutral-400">

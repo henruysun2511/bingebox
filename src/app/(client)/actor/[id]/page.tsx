@@ -23,8 +23,8 @@ export default function ActorDetailPage() {
                 <div className="flex flex-col lg:flex-row gap-5 items-start">
 
                     {/* LEFT CONTENT: Actor Info */}
-                    <div className="w-full lg:w-[300px] shrink-0">
-                        <div className="rounded-2xl p-6 border border-white/10 sticky top-24">
+                    <div className="w-full lg:w-[300px] shrink-0 bg-white/5 rounded-lg p-6">
+                        <div className="sticky top-24">
                             {/* Avatar */}
                             <div className="aspect-square w-full mb-6 overflow-hidden rounded-xl border-2 border-blue-500/30">
                                 <img

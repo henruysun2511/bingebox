@@ -22,7 +22,7 @@ export default function UserMovieFavouriteList() {
         <div className="flex flex-wrap gap-6 justify-start">
             {movies.length > 0 ? (
                 movies.map((movie) => (
-                    <div key={movie._id} className="w-[230px] group cursor-pointer">
+                    <div key={movie._id} className="w-[230px] group cursor-pointer" data-theme-fixed>
                         {/* Poster */}
                         <div className="relative h-[320px] w-full overflow-hidden rounded-xl">
                             <img
@@ -38,13 +38,13 @@ export default function UserMovieFavouriteList() {
 
                         {/* Name */}
                         <Link href={`/movie/${movie._id}`}>
-                            <h2 className="mt-3 text-white font-semibold text-lg line-clamp-2 hover:text-blue-400 transition">
+                            <h2 data-theme-text className="mt-3 text-white font-semibold text-lg line-clamp-2 hover:text-blue-400 transition">
                                 {movie.name || "N/A"}
                             </h2>
                         </Link>
 
                         {/* Categories (object[]) */}
-                        <p className="text-gray-400 text-sm mt-1">
+                        <p data-theme-text className="text-gray-400 text-sm mt-1">
                             Thể loại:{" "}
                             {movie.categories?.length
                                 ? movie.categories.map((c) => c.name).join(", ")

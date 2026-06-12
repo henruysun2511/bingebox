@@ -4,11 +4,8 @@ import { addDays, format, isSameDay } from "date-fns";
 import { vi } from "date-fns/locale";
 import {
   Calendar1,
-  ChevronRight,
   Clock1,
-  History,
   Info,
-  MapPin,
   PlayCircle
 } from "lucide-react";
 import Link from "next/link";
@@ -17,7 +14,6 @@ import { useMemo, useRef, useState } from "react";
 
 import LoadingScreen from "@/components/common/loading/loading-screen";
 import SectionTitle from "@/components/common/title/section-title";
-import { Button } from "@/components/ui/button";
 import { MovieStatusEnum } from "@/constants/enum";
 import { cn } from "@/lib/utils";
 import { useMovieDetail } from "@/queries/useMovieQuery";
@@ -42,7 +38,7 @@ export default function MovieShowtimeDetailPage() {
   const showtimes = showtimeData?.data ?? [];
 
   // Fetch TẤT CẢ lịch chiếu để lọc ra các ngày trong quá khứ
-  const { data: allShowtimeData } = useShowtimesByMovie(id, {}); 
+  const { data: allShowtimeData } = useShowtimesByMovie(id, {});
   const allShowtimesRaw = allShowtimeData?.data ?? [];
 
   // 2. Xử lý Logic
@@ -58,7 +54,7 @@ export default function MovieShowtimeDetailPage() {
           const startTime = new Date(st.startTime);
           const today = new Date();
           today.setHours(0, 0, 0, 0);
-          
+
           if (startTime < today) {
             const dateStr = format(startTime, "yyyy-MM-dd");
             if (!datesMap.has(dateStr)) {
@@ -88,31 +84,31 @@ export default function MovieShowtimeDetailPage() {
   if (!movie) return <div className="min-h-screen bg-black flex items-center justify-center">Không tìm thấy phim</div>;
 
   return (
-    <div className="min-h-screen text-white pb-20">
+    <div className="min-h-screen text-white pb-20 ">
       <div className="max-w-7xl mx-auto px-6 pt-20">
-        
+
         {/* --- SECTION 2: THÔNG TIN PHIM --- */}
-        <div className="relative z-5 flex flex-col md:flex-row gap-10 items-center md:items-start bg-neutral-900/30 p-8 rounded-3xl border border-white/5">
+        <div className="relative z-5 bg-white/5 p-6 rounded-lg flex flex-col md:flex-row gap-10 items-center md:items-start">
           <div className="relative w-64 shrink-0 group cursor-pointer" onClick={() => setShowTrailer(true)}>
-            <div className="shadow-[0_20px_50px_rgba(0,0,0,1)] rounded-xl overflow-hidden border border-white/10">
+            <div className="rounded-xl overflow-hidden shadow-2xl">
               <img src={movie.poster} alt={movie.name} className="w-full aspect-[2/3] object-cover group-hover:scale-105 transition-transform duration-500" />
             </div>
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40">
-                <PlayCircle size={60} className="text-blue" />
+              <PlayCircle size={60} className="text-blue" />
             </div>
           </div>
 
           <div className="flex-1">
             <div className="flex items-center gap-3 mb-4">
-              <span className="bg-golden text-black px-3 py-1 rounded-md text-xs font-black">{movie.agePermission}</span>
+              <span className="bg-yellow-500 text-black font-semibold px-3 py-1 rounded-md text-sm">{movie.agePermission}</span>
               <span className="text-neutral-400 text-sm flex items-center gap-1"><Clock1 size={14} /> {movie.duration} phút</span>
             </div>
-            
-            <h1 className="text-4xl md:text-6xl font-black uppercase italic tracking-tighter mb-6 leading-tight bg-gradient-to-r from-white to-neutral-500 bg-clip-text text-transparent">
+
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black uppercase tracking-tighter mb-6 leading-tight bg-gradient-to-r from-white to-neutral-500 bg-clip-text text-transparent">
               {movie.name}
             </h1>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-4 text-sm text-neutral-300">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-4 text-sm text-white/80">
               <p><span className="text-neutral-500 font-medium">Đạo diễn:</span> {movie.director}</p>
               <p><span className="text-neutral-500 font-medium">Quốc gia:</span> {movie.nationality}</p>
               <p className="col-span-1 md:col-span-2"><span className="text-neutral-500 font-medium">Thể loại:</span> {movie.categories?.map((c: any) => c.name).join(", ")}</p>
@@ -147,12 +143,12 @@ export default function MovieShowtimeDetailPage() {
                       key={i}
                       onClick={() => { setSelectedDate(date); setShowPast(false); }}
                       className={cn(
-                        "flex flex-col items-center min-w-[110px] py-4 rounded-2xl transition-all border shrink-0",
-                        active ? "bg-blue border-blue shadow-[0_10px_20px_rgba(0,74,173,0.3)]" : "bg-neutral-900 border-white/5 hover:border-white/20"
+                        "flex flex-col items-center min-w-[80px] py-3 rounded-xl transition-all",
+                        active ? "bg-blue shadow-lg shadow-blue-500/20" : "bg-white/5 border-white/10 hover:bg-white/10"
                       )}
                     >
-                      <span className="text-[10px] uppercase font-bold opacity-60 mb-1">{i === 0 ? "Hôm nay" : format(date, "EEEE", { locale: vi })}</span>
-                      <span className="text-xl font-black">{format(date, "dd/MM")}</span>
+                      <span className="text-[10px] uppercase opacity-60">{i === 0 ? "Hôm nay" : format(date, "EEEE", { locale: vi })}</span>
+                      <span className="text-lg font-bold">{format(date, "dd/MM")}</span>
                     </button>
                   );
                 })}
@@ -165,23 +161,23 @@ export default function MovieShowtimeDetailPage() {
                 ) : (
                   (showPast ? pastShowtimesToRender : showtimes).length > 0 ? (
                     (showPast ? pastShowtimesToRender : showtimes).map((cinema: any) => (
-                      <div key={cinema._id} className="bg-neutral-900/40 border border-white/5 rounded-3xl overflow-hidden backdrop-blur-sm">
-                        <div className="p-6 border-b border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white/[0.02]">
-                          <div>
-                            <h3 className="text-blue font-bold text-xl uppercase tracking-tight">{cinema.name}</h3>
-                            <p className="text-neutral-500 text-xs flex items-center gap-1 mt-1 italic"><MapPin size={12} /> {cinema.address}</p>
-                          </div>
-                          <Button variant="ghost" className="text-golden hover:text-golden hover:bg-golden/10 p-0 h-auto text-xs uppercase tracking-widest font-bold">Xem bản đồ <ChevronRight size={14} /></Button>
+                      <div key={cinema._id} className="border border-white/10 rounded-2xl overflow-hidden">
+                        <div className="p-4 bg-white/5 border-b border-white/10">
+                          <h3 className="font-bold text-lg text-blue">{cinema.name}</h3>
+                          <p className="text-xs text-gray-400 mt-1 italic">{cinema.address}</p>
                         </div>
-                        <div className="p-6 flex flex-col gap-8">
+                        <div className="p-4 space-y-6">
                           {cinema.formats.map((f: any, idx: number) => (
-                            <div key={idx} className="space-y-4">
-                              <span className="text-[10px] font-black bg-blue/10 text-blue border border-blue/20 px-3 py-1 rounded-md uppercase tracking-widest">{f.format}</span>
+                            <div key={idx} className="space-y-3">
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm font-semibold uppercase tracking-wider text-gray-300">{f.format}</span>
+                                <div className="h-[1px] flex-1 bg-white/5" />
+                              </div>
                               <div className="flex flex-wrap gap-3">
                                 {f.showtimes.map((st: any) => (
-                                  <Link key={st._id} href={`/booking/${st._id}`} className="group bg-neutral-800/50 hover:bg-blue border border-white/5 hover:border-blue px-6 py-3 rounded-xl transition-all text-center min-w-[110px]">
-                                    <p className="font-black text-lg group-hover:scale-110 transition-transform">{format(new Date(st.startTime), "HH:mm")}</p>
-                                    <p className="text-[10px] text-neutral-500 group-hover:text-blue-100 italic">~{format(new Date(st.endTime), "HH:mm")}</p>
+                                  <Link key={st._id} href={`/booking/${st._id}`} className="group bg-neutral-800 hover:bg-blue-600 border border-white/10 hover:border-blue-500 rounded-lg px-4 py-2 transition-all">
+                                    <div className="text-sm font-bold group-hover:text-white">{format(new Date(st.startTime), "HH:mm")}</div>
+                                    <div className="text-[10px] text-gray-500 group-hover:text-blue-200">~{format(new Date(st.endTime), "HH:mm")}</div>
                                   </Link>
                                 ))}
                               </div>
@@ -200,43 +196,70 @@ export default function MovieShowtimeDetailPage() {
               </div>
 
               {/* SECTION: LỊCH CHIẾU QUÁ KHỨ */}
-              <div className="pt-10 border-t border-white/5">
+              <div className="pt-10 border-t border-white/5 text-center">
                 <button
                   onClick={() => {
                     setShowPast(!showPast);
                     if (!selectedPastDate && uniquePastDates.length > 0) setSelectedPastDate(uniquePastDates[0]);
                   }}
-                  className={cn(
-                    "mx-auto flex items-center gap-2 px-8 py-3 rounded-full transition-all text-sm font-bold uppercase tracking-widest border",
-                    showPast ? "bg-red-600 border-red-600" : "bg-white/5 hover:bg-white/10 border-white/10"
-                  )}
+                  className="px-6 py-3 bg-white/10 hover:bg-white/20 rounded-full text-sm font-semibold transition"
                 >
-                  <History size={18} className={showPast ? "text-white" : "text-golden"} />
-                  {showPast ? "Đang xem lịch cũ" : "Xem lịch chiếu cũ (Demo)"}
+                  {showPast ? "Ẩn lịch chiếu quá khứ" : "Xem lịch chiếu trong quá khứ"}
                 </button>
 
                 {showPast && (
                   <div className="mt-10 animate-in fade-in slide-in-from-top-4 duration-500">
-                    <p className="text-center text-neutral-500 text-xs mb-6 uppercase tracking-widest italic">Chọn một ngày trong quá khứ để xem lại suất chiếu</p>
-                    <div className="flex gap-3 overflow-x-auto pb-6 custom-scrollbar justify-center">
+                    <div className="flex gap-4 overflow-x-auto pb-6 custom-scrollbar justify-center">
                       {uniquePastDates.length > 0 ? (
                         uniquePastDates.map((date, i) => (
                           <button
                             key={i}
                             onClick={() => setSelectedPastDate(date)}
                             className={cn(
-                              "min-w-[90px] py-3 rounded-xl border text-center transition-all shrink-0",
-                              selectedPastDate && isSameDay(date, selectedPastDate) ? "bg-red-600 border-red-600 shadow-lg shadow-red-600/20" : "bg-neutral-900 border-white/5"
+                              "flex flex-col items-center min-w-[80px] py-3 rounded-xl transition-all",
+                              selectedPastDate && isSameDay(date, selectedPastDate) ? "bg-red-600 shadow-lg shadow-red-500/20" : "bg-white/5 border-white/10 hover:bg-white/10"
                             )}
                           >
-                            <p className="text-[10px] opacity-50 uppercase">{format(date, "EEEE", { locale: vi })}</p>
-                            <p className="font-bold">{format(date, "dd/MM")}</p>
+                            <span className="text-[10px] uppercase opacity-60">{format(date, "EEEE", { locale: vi })}</span>
+                            <span className="text-lg font-bold">{format(date, "dd/MM")}</span>
                           </button>
                         ))
                       ) : (
                         <p className="text-neutral-600 italic">Không có dữ liệu quá khứ</p>
                       )}
                     </div>
+
+                    {/* Past Cinema Cards */}
+                    {pastShowtimesToRender.length > 0 && (
+                      <div className="space-y-6 mt-6">
+                        {pastShowtimesToRender.map((cinema: any) => (
+                          <div key={cinema._id} className="border border-white/10 rounded-2xl overflow-hidden">
+                            <div className="p-4 bg-white/5 border-b border-white/10">
+                              <h3 className="font-bold text-lg text-blue">{cinema.name}</h3>
+                              <p className="text-xs text-gray-400 mt-1 italic">{cinema.address}</p>
+                            </div>
+                            <div className="p-4 space-y-6">
+                              {cinema.formats.map((f: any, fIdx: number) => (
+                                <div key={fIdx} className="space-y-3">
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-sm font-semibold uppercase tracking-wider text-gray-300">{f.format}</span>
+                                    <div className="h-[1px] flex-1 bg-white/5" />
+                                  </div>
+                                  <div className="flex flex-wrap gap-3">
+                                    {f.showtimes.map((st: any) => (
+                                      <Link key={st._id} href={`/booking/${st._id}`} className="bg-neutral-800 border border-white/10 rounded-lg px-4 py-2 transition-all">
+                                        <div className="text-sm font-bold">{format(new Date(st.startTime), "HH:mm")}</div>
+                                        <div className="text-[10px] text-gray-500">~{format(new Date(st.endTime), "HH:mm")}</div>
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -250,11 +273,11 @@ export default function MovieShowtimeDetailPage() {
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/95 backdrop-blur-sm" onClick={() => setShowTrailer(false)} />
           <div className="relative w-full max-w-5xl aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
-            <iframe 
-              src={movie.trailer?.replace("watch?v=", "embed/") + "?autoplay=1"} 
-              className="w-full h-full" 
+            <iframe
+              src={movie.trailer?.replace("watch?v=", "embed/") + "?autoplay=1"}
+              className="w-full h-full"
               allow="autoplay; encrypted-media"
-              allowFullScreen 
+              allowFullScreen
             />
           </div>
         </div>

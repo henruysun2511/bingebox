@@ -7,25 +7,23 @@ interface Props {
 }
 
 export default function SeatItemClient({ seat, isSelected, onClick }: Props) {
-  // 1. Xử lý ô trống (Layout)
+  if (!seat) return <div className="w-10 h-10" />;
+
   if (seat.code === "TRỐNG" || seat.isBlocked) {
-    return <div className="w-10 h-10" />; // Trả về ô trống không có border/màu
+    return <div className="w-10 h-10" />;
   }
 
-  // 2. Xác định trạng thái ghế
   const isSold = seat.status === "SOLD";
   const isHold = seat.status === "HOLD";
-  const isAvailable = seat.status === "AVAILABLE";
-
-  // 3. Logic màu sắc
-  let bgColor = seat.seatType?.color || "#3f3f46"; // Mặc định từ loại ghế
-  
-  if (isSold) bgColor = "#171717"; // Màu xám tối cho ghế đã bán
-  if (isHold) bgColor = "#f59e0b"; // Màu vàng cho ghế đang giữ (Hold)
-  if (isSelected) bgColor = "#0066FF"; // Màu xanh dương khi người dùng chọn
-
-  // 4. Logic vô hiệu hóa click
   const isDisabled = isSold || isHold;
+
+  const STATUS_COLOR: Record<string, string> = {
+    SOLD: "var(--color-sold)",
+    HOLD: "var(--color-hold)",
+  };
+  const bgColor = isSelected
+    ? "var(--color-selected)"
+    : STATUS_COLOR[seat.status] || seat.seatType?.color || "#3f3f46";
 
   return (
     <div

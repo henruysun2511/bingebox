@@ -4,7 +4,6 @@ import BlogSection from "@/components/client/blog/blog-section";
 import Carousel from "@/components/client/carousel/carousel";
 import MovieComingSoonList from "@/components/client/movie/movie-comingsoon-list";
 import MovieNowShowingList from "@/components/client/movie/movie-nowshowing-list";
-import PromotionList from "@/components/client/promotion/promotion-list";
 import SectionTitle from "@/components/common/title/section-title";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { BaseStatusEnum } from "@/constants/enum";
@@ -69,34 +68,14 @@ export default function Home() {
         <div className="relative z-5 -mt-14">
           <QuickTicketBuying />
         </div>
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start">
 
-          {/* LEFT CONTENT */}
-          <div className="flex-1 w-full">
-            <SectionTitle title="Phim đang chiếu" />
-            <MovieNowShowingList />
+        <div className="flex-1 w-full">
+          <SectionTitle title="Phim đang chiếu" />
+          <MovieNowShowingList />
 
-            <SectionTitle title="Phim sắp chiếu" />
-            <MovieComingSoonList />
-          </div>
-
-          {/* RIGHT SIDEBAR */}
-          <div className="w-full lg:w-[260px] shrink-0">
-            <SectionTitle title="Khuyến mãi" />
-
-            <PromotionList
-              promotions={[
-                "/images/promo1.jpg",
-                "/images/promo2.jpg",
-                "/images/promo3.jpg",
-                "/images/promo4.jpg",
-              ]}
-            />
-          </div>
-
+          <SectionTitle title="Phim sắp chiếu" />
+          <MovieComingSoonList />
         </div>
-
-
 
         <BlogSection />
 

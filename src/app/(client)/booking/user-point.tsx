@@ -58,7 +58,7 @@ export default function UserPoint({
     if (isLoading) return <div className="animate-pulse h-24 bg-neutral-900 rounded-xl mt-4" />;
 
     return (
-        <div className="bg-[#0a0a0a] border border-neutral-900 rounded-xl p-5 mt-4">
+        <div className="bg-card border border-neutral-900 rounded-xl p-5 mt-4">
             <div className="flex justify-between items-center mb-4">
                 <div className="flex items-center gap-2 text-white font-bold">
                     <Star className="text-yellow-500" size={20} fill="currentColor" />

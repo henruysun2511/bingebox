@@ -1,130 +1,165 @@
 "use client";
 import { useSeatsByShowtime } from "@/queries/useSeatQuery";
 import { usePreviewTicketPrice } from "@/queries/useTicketPrice";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { holdSeat, releaseSeat, useSeatSocket } from "@/hooks/useSeatSocket";
 import SeatItemClient from "./seat-item";
+
+interface SeatItem {
+    _id: string;
+    code: string;
+    row: string;
+    column?: number | null;
+    status: string;
+    isBlocked?: boolean;
+    isCoupleSeat?: boolean;
+    partnerSeat?: string;
+    seatType?: { name: string; price: number; color: string };
+    price?: number;
+}
 
 interface Props {
     showtimeId: string;
-    selectedSeats: any[];
-    setSelectedSeats: React.Dispatch<React.SetStateAction<any[]>>;
+    selectedSeats: SeatItem[];
+    setSelectedSeats: React.Dispatch<React.SetStateAction<SeatItem[]>>;
 }
+
+const findPartnerSeat = (allSeats: SeatItem[], seat: SeatItem) => {
+    const seatNumber = parseInt(seat.code.replace(/[^\d]/g, ""), 10);
+    const isEven = seatNumber % 2 === 0;
+    const partnerCode = isEven
+        ? seat.code.replace(/\d+$/, String(seatNumber - 1))
+        : seat.code.replace(/\d+$/, String(seatNumber + 1));
+    return allSeats.find(
+        (s) => s.code === partnerCode && s.row === seat.row
+    );
+};
+
+const groupRows = (seats: SeatItem[]) => {
+    const grouped: Record<string, SeatItem[]> = {};
+    seats.forEach((seat) => {
+        if (!grouped[seat.row]) grouped[seat.row] = [];
+        grouped[seat.row].push(seat);
+    });
+    return Object.keys(grouped)
+        .sort()
+        .map((rowKey) => ({
+            rowKey,
+            seats: grouped[rowKey].sort(
+                (a, b) => (a.column || 0) - (b.column || 0)
+            ),
+        }));
+};
 
 export default function SeatListClient({ showtimeId, selectedSeats, setSelectedSeats }: Props) {
     const { data: resData, isLoading } = useSeatsByShowtime(showtimeId);
-    const [rows, setRows] = useState<any[]>([]);
+    const seats = resData?.data ?? [];
+    const [rows, setRows] = useState<{ rowKey: string; seats: SeatItem[] }[]>([]);
+    const [loadingSeats, setLoadingSeats] = useState<Set<string>>(new Set());
     const { mutate: previewPrice } = usePreviewTicketPrice();
+    useSeatSocket(showtimeId);
+
+    const selectedRef = useRef(selectedSeats);
+    selectedRef.current = selectedSeats;
 
     useEffect(() => {
-        const seats = resData?.data;
-        if (seats && Array.isArray(seats)) {
-            const groupedRows: { [key: string]: any[] } = {};
+        return () => {
+            selectedRef.current.forEach((s) => releaseSeat(showtimeId, s._id));
+        };
+    }, []);
 
-            // Nhóm ghế theo hàng (row: A, B, C...)
-            seats.forEach((seat: any) => {
-                if (!groupedRows[seat.row]) {
-                    groupedRows[seat.row] = [];
-                }
-                groupedRows[seat.row].push(seat);
-            });
+    useEffect(() => {
+        if (Array.isArray(seats)) setRows(groupRows(seats));
+    }, [seats]);
 
-            // Sắp xếp hàng theo chữ cái và ghế trong hàng theo cột
-            const formattedRows = Object.keys(groupedRows)
-                .sort()
-                .map((rowKey) => ({
-                    rowKey,
-                    seats: groupedRows[rowKey].sort((a, b) => (a.column || 0) - (b.column || 0)),
-                }));
+    const toggleSeat = useCallback(
+        (seat: SeatItem) => {
+            if (loadingSeats.size > 0) return;
 
-            setRows(formattedRows);
-        }
-    }, [resData]);
+            const isCouple = seat.seatType?.name === "Ghế đôi";
+            const partnerSeat = findPartnerSeat(seats, seat);
+            const isExisted = selectedSeats.some((s) => s._id === seat._id);
 
-    const toggleSeat = (seat: any) => {
-        const isCouple = seat.seatType?.name === "Ghế đôi";
-        const seatNumber = parseInt(seat.code.replace(/[^\d]/g, ''));
-        const isEven = seatNumber % 2 === 0;
-
-        const partnerCode = isEven
-            ? seat.code.replace(/\d+$/, (seatNumber - 1).toString())
-            : seat.code.replace(/\d+$/, (seatNumber + 1).toString());
-
-        const partnerSeat = resData?.data.find((s: any) => s.code === partnerCode && s.row === seat.row);
-        const isExisted = selectedSeats.find((s) => s._id === seat._id);
-
-        if (isExisted) {
-            // HỦY CHỌN: Cập nhật UI ngay lập tức
-            if (isCouple) {
-                setSelectedSeats(selectedSeats.filter(
-                    (s) => s._id !== seat._id && s._id !== partnerSeat?._id
-                ));
+            if (isExisted) {
+                releaseSeat(showtimeId, seat._id);
+                if (isCouple && partnerSeat) releaseSeat(showtimeId, partnerSeat._id);
+                setSelectedSeats(
+                    isCouple
+                        ? selectedSeats.filter(
+                            (s) => s._id !== seat._id && s._id !== partnerSeat?._id
+                        )
+                        : selectedSeats.filter((s) => s._id !== seat._id)
+                );
             } else {
-                setSelectedSeats(selectedSeats.filter((s) => s._id !== seat._id));
-            }
-        } else {
-            // CHỌN MỚI: Cập nhật UI màu xanh ngay lập tức (với giá tạm tính 0 hoặc giá mặc định)
-            const initialSeat = { ...seat, price: seat.seatType?.price || 0 };
-
-            if (isCouple) {
-                if (partnerSeat && partnerSeat.status === "AVAILABLE") {
-                    const initialPartner = { ...partnerSeat, price: partnerSeat.seatType?.price || 0 };
-                    setSelectedSeats([...selectedSeats, initialSeat, initialPartner]);
-                } else {
-                    return toast.warning("Ghế đôi này không khả dụng đủ cặp");
-                }
-            } else {
-                setSelectedSeats([...selectedSeats, initialSeat]);
-            }
-
-            // GỌI API NGẦM ĐỂ CẬP NHẬT GIÁ CHÍNH XÁC
-            previewPrice(
-                { seatId: seat._id, showtimeId },
-                {
-                    onSuccess: (res: any) => {
-                        const priceFromServer = res.data.data.price;
-
-                        // Cập nhật lại giá vé trong mảng selectedSeats mà không làm mất trạng thái xanh
-                        setSelectedSeats((prev: any[]) => // Thêm kiểu any[] cho prev
-                            prev.map((s: any) => // Thêm kiểu any cho s
-                                (s._id === seat._id || (isCouple && s._id === partnerSeat?._id))
-                                    ? { ...s, price: priceFromServer }
-                                    : s
-                            )
-                        );
-                    },
-                    onError: () => {
-                        // Nếu lỗi thì vẫn giữ màu xanh nhưng báo lỗi hoặc dùng giá mặc định
-                        console.error("Cập nhật giá thực tế thất bại");
+                holdSeat(showtimeId, seat._id);
+                if (isCouple) {
+                    if (!partnerSeat || partnerSeat.status !== "AVAILABLE") {
+                        return toast.warning("Ghế đôi này không khả dụng đủ cặp");
                     }
+                    holdSeat(showtimeId, partnerSeat._id);
+                    setSelectedSeats([
+                        ...selectedSeats,
+                        { ...seat, price: seat.seatType?.price || 0 },
+                        { ...partnerSeat, price: partnerSeat.seatType?.price || 0 },
+                    ]);
+                } else {
+                    setSelectedSeats([
+                        ...selectedSeats,
+                        { ...seat, price: seat.seatType?.price || 0 },
+                    ]);
                 }
-            );
-        }
-    };
+
+                setLoadingSeats((prev) => new Set(prev).add(seat._id));
+
+                previewPrice(
+                    { seatId: seat._id, showtimeId },
+                    {
+                        onSuccess: (res: any) => {
+                            const priceFromServer = res.data.data.price;
+                            setSelectedSeats((prev) =>
+                                prev.map((s) =>
+                                    s._id === seat._id ||
+                                    (isCouple && s._id === partnerSeat?._id)
+                                        ? { ...s, price: priceFromServer }
+                                        : s
+                                )
+                            );
+                        },
+                        onError: () => console.error("Cập nhật giá thực tế thất bại"),
+                        onSettled: () => {
+                            setLoadingSeats((prev) => {
+                                const next = new Set(prev);
+                                next.delete(seat._id);
+                                return next;
+                            });
+                        },
+                    }
+                );
+            }
+        },
+        [showtimeId, selectedSeats, seats, setSelectedSeats, previewPrice, loadingSeats]
+    );
 
     if (isLoading) return <div className="text-center py-20 italic text-neutral-500">Đang tải sơ đồ ghế...</div>;
 
     return (
-        <div className="flex flex-col items-center w-full py-8 ">
-            {/* Màn hình */}
+        <div data-theme-fixed className="flex flex-col items-center w-full py-8">
             <div className="w-full max-w-2xl mb-16">
-                <div className="w-full h-1.5 bg-blue shadow-[0_0_20px_#0066FF] rounded-full mb-4" />
+                <div className="w-full h-1.5 bg-blue shadow-[0_0_20px_var(--color-selected)] rounded-full mb-4" />
                 <p className="text-center text-neutral-500 tracking-[1em] uppercase text-xs">Màn hình</p>
             </div>
 
-            {/* Danh sách ghế */}
             <div className="w-full overflow-x-auto pb-6 cursor-grab active:cursor-grabbing custom-scrollbar">
                 <div className="flex flex-col items-center min-w-max mx-auto px-4">
                     <div className="space-y-3 inline-block">
                         {rows.map((row) => (
                             <div key={row.rowKey} className="flex items-center gap-4">
-                                {/* Tên hàng ghế */}
                                 <div className="w-6 font-bold text-neutral-600 text-sm sticky left-0 bg-transparent backdrop-blur-sm z-10">
                                     {row.rowKey}
                                 </div>
-
                                 <div className="flex gap-1.5">
-                                    {row.seats.map((seat: any) => (
+                                    {row.seats.map((seat) => (
                                         <SeatItemClient
                                             key={seat._id}
                                             seat={seat}
@@ -139,20 +174,18 @@ export default function SeatListClient({ showtimeId, selectedSeats, setSelectedS
                 </div>
             </div>
 
-            {/* Chú thích (Legend) */}
             <div className="flex flex-wrap justify-center gap-6 mt-12 text-xs text-neutral-400">
-                <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 rounded bg-neutral-800" /> <span>Có thể chọn</span>
-                </div>
-                <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 rounded bg-[#0066FF]" /> <span>Đang chọn</span>
-                </div>
-                <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 rounded bg-[#f59e0b]" /> <span>Đang giữ chỗ</span>
-                </div>
-                <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 rounded bg-[#171717] grayscale" /> <span>Đã bán</span>
-                </div>
+                {[
+                    { color: "bg-neutral-800", label: "Có thể chọn" },
+                    { color: "bg-selected", label: "Đang chọn" },
+                    { color: "bg-hold", label: "Đang giữ chỗ" },
+                    { color: "bg-sold grayscale", label: "Đã bán" },
+                ].map(({ color, label }) => (
+                    <div key={label} className="flex items-center gap-2">
+                        <div className={`w-4 h-4 rounded ${color}`} />
+                        <span>{label}</span>
+                    </div>
+                ))}
             </div>
         </div>
     );

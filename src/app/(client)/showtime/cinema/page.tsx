@@ -1,6 +1,8 @@
 "use client";
 
+import LoadingScreen from "@/components/common/loading/loading-screen";
 import SectionTitle from "@/components/common/title/section-title";
+import { Skeleton } from "@/components/ui/skeleton";
 import { MovieStatusEnum } from "@/constants/enum";
 import { cn } from "@/lib/utils";
 import { useCinemaList } from "@/queries/useCinemaQuery";
@@ -8,18 +10,19 @@ import { useAdminMovieList } from "@/queries/useMovieQuery";
 import { useShowtimesByCinema } from "@/queries/useShowtimeQuery";
 import { addDays, format, isSameDay } from "date-fns";
 import { vi } from "date-fns/locale";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { MovieBannerCarousel } from "../movie-banner-carousel";
 
 export default function ShowtimeCinemaPage() {
-    const { data: cinemaData } = useCinemaList({ limit: 10 });
+    const { data: cinemaData, isLoading: isCinemaLoading } = useCinemaList({ limit: 10 });
     const cinemas = cinemaData?.data ?? [];
 
     const [selectedCinema, setSelectedCinema] = useState<string | null>(null);
     const [mode, setMode] = useState<"current" | "past">("current");
 
-    const { data: showtimeData } = useShowtimesByCinema(selectedCinema || "");
+    const { data: showtimeData, isLoading: isShowtimeLoading } = useShowtimesByCinema(selectedCinema || "");
     const showtimes = showtimeData?.data ?? [];
 
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -57,7 +60,7 @@ export default function ShowtimeCinemaPage() {
         })
         .filter(Boolean);
 
-    const { data: movies, isLoading } = useAdminMovieList({ limit: 5, status: MovieStatusEnum.NOW_SHOWING });
+    const { data: movies, isLoading: isMoviesLoading } = useAdminMovieList({ limit: 5, status: MovieStatusEnum.NOW_SHOWING });
     return (
         <>
             <MovieBannerCarousel movies={movies?.data || []} />
@@ -66,7 +69,13 @@ export default function ShowtimeCinemaPage() {
                 {/* DANH SÁCH RẠP */}
                 <SectionTitle title="Danh sách rạp" />
                 <div className="flex gap-8 overflow-x-auto pb-6 scrollbar-hide">
-                    {cinemas.map((cinema: any) => {
+                    {isCinemaLoading ? (
+                        Array.from({ length: 3 }).map((_, i) => (
+                            <Skeleton key={i} className="min-w-[260px] h-[180px] rounded-2xl bg-white/5" />
+                        ))
+                    ) : cinemas.length === 0 ? (
+                        <p className="text-gray-500 italic">Chưa có rạp nào</p>
+                    ) : cinemas.map((cinema: any) => {
                         const active = selectedCinema === cinema._id;
 
                         return (
@@ -160,7 +169,12 @@ export default function ShowtimeCinemaPage() {
 
                         {/* MOVIE LIST */}
                         <div className="space-y-10">
-                            {filteredMovies.length === 0 ? (
+                            {isShowtimeLoading ? (
+                                <div className="flex items-center justify-center py-20 text-blue-300">
+                                    <Loader2 className="animate-spin mr-2" size={20} />
+                                    Đang tải lịch chiếu...
+                                </div>
+                            ) : filteredMovies.length === 0 ? (
                                 <div className="text-center py-20 text-gray-500">
                                     Không có suất chiếu
                                 </div>

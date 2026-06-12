@@ -5,6 +5,7 @@ import { SettingService } from "@/services/setting.service";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { Metadata } from "next";
 import { Montserrat } from "next/font/google";
+import { ThemeProvider } from "next-themes";
 import { cache } from "react";
 import { Toaster } from "sonner";
 import "./globals.css";
@@ -51,15 +52,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={montserrat.variable}>
-        <QueryProvider>
-          <HydrationBoundary state={dehydratedState}>
-            <AuthInit />
-            {children}
-            <Toaster position="top-right" richColors />
-          </HydrationBoundary>
-        </QueryProvider>
+        <ThemeProvider attribute="data-theme" defaultTheme="dark" enableSystem={false}>
+          <QueryProvider>
+            <HydrationBoundary state={dehydratedState}>
+              <AuthInit />
+              {children}
+              <Toaster position="top-right" richColors />
+            </HydrationBoundary>
+          </QueryProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

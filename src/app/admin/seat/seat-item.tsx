@@ -1,10 +1,8 @@
-
-
 type Props = {
-  seat: any
-  active: boolean
-  onClick: () => void
-}
+  seat: any;
+  active: boolean;
+  onClick: () => void;
+};
 
 export default function SeatItem({ seat, active, onClick }: Props) {
   // Ưu tiên lấy màu từ API trả về, nếu không có mới dùng màu mặc định

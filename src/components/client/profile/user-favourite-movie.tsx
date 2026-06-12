@@ -1,9 +1,9 @@
 import MovieCardSkeleton from "@/components/common/skeleton/movie-card-skeleton";
-import { useWatchedMovies } from "@/queries/useMovieQuery";
+import { useFavouriteMovies } from "@/queries/useMovieQuery";
 import Link from "next/link";
 
-export default function UserMovieWatchedList() {
-    const { data, isLoading } = useWatchedMovies();
+export default function UserMovieFavouriteList() {
+    const { data, isLoading } = useFavouriteMovies();
 
     if (isLoading) {
         return (
@@ -53,7 +53,7 @@ export default function UserMovieWatchedList() {
                     </div >
                 ))
             ) : (
-                <div className="text-white">Chưa có phim đã xem</div>
+                <div className="text-white">Chưa có phim yêu thích</div>
             )}
         </div>
     );

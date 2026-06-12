@@ -153,7 +153,7 @@ export default function CommentPage() {
         <>
             <div className="mt-15"></div>
             <CommentBanner />
-            <div className="min-h-screen text-white pb-20">
+            <div data-theme-fixed className="min-h-screen text-white pb-20">
 
 
                 <div className="max-w-[1400px] mx-auto px-4 md:px-10 lg:px-20 grid grid-cols-1 lg:grid-cols-12 gap-10 mt-15 relative z-10">
@@ -231,9 +231,9 @@ export default function CommentPage() {
                                 {/* Comments Section */}
                                 <div className="mt-12 space-y-8">
                                     <div className="flex items-center justify-between">
-                                        <h3 className="text-2xl font-bold flex items-center gap-3">
+                                        <h3 data-theme-text className="text-2xl font-bold flex items-center gap-3">
                                             Đánh giá từ khán giả
-                                            <span className="text-sm font-normal text-gray-500 bg-white/5 px-3 py-1 rounded-full">
+                                            <span data-theme-text className="text-sm font-normal text-gray-500 bg-white/5 px-3 py-1 rounded-full">
                                                 {pagination?.totalItems || 0}
                                             </span>
                                         </h3>
@@ -244,7 +244,7 @@ export default function CommentPage() {
                                         {isLoadingComments ? (
                                             <Loader2 className="animate-spin text-blue-500" />
                                         ) : comments.map((comment: any) => (
-                                            <div key={comment._id} className="group relative bg-[#161616] border border-white/5 p-6 rounded-[32px] transition-all duration-300 overflow-hidden">
+                                            <div key={comment._id} className="group relative bg-comment border border-white/5 p-6 rounded-[32px] transition-all duration-300 overflow-hidden">
 
                                                 {/* 1. NỀN BANNER PHÍA SAU (Background Image Layer) */}
                                                 <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
@@ -255,7 +255,7 @@ export default function CommentPage() {
                                                         className="w-full h-full object-cover opacity-20 blur-none transition-transform duration-700 group-hover:scale-105 group-hover:opacity-40"
                                                     />
                                                     {/* Lớp gradient overlay mỏng hơn để không che mất ảnh */}
-                                                    <div className="absolute inset-0 bg-gradient-to-br from-[#161616]/60 via-black/20 to-[#161616]/70" />
+                                                    <div className="absolute inset-0 bg-gradient-to-br from-comment/60 via-black/20 to-comment/70" />
                                                 </div>
 
                                                 {/* 2. NỘI DUNG (Content Layer) - Cần đặt z-10 để nổi lên trên nền */}

@@ -39,7 +39,7 @@ export default function VoucherListClient({ selectedVoucher, setSelectedVoucher 
 
                             <div className="flex-1 p-4 space-y-1 relative">
                                 <div className="absolute -left-2 top-0 bottom-0 flex flex-col justify-around py-2">
-                                    {[1, 2, 3].map(i => <div key={i} className="w-4 h-4 bg-[#0a0a0a] rounded-full -ml-2" />)}
+                                    {[1, 2, 3].map(i => <div key={i} className="w-4 h-4 bg-card rounded-full -ml-2" />)}
                                 </div>
 
                                 <div className="flex justify-between items-start">

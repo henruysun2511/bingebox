@@ -10,7 +10,7 @@ interface FooterProps {
 
 export default function Footer({ settings }: FooterProps) {
   return (
-    <footer className="w-full font-sans" id="footer">
+    <footer data-theme-fixed className="w-full font-sans" id="footer">
       {/* TOP FOOTER */}
       <div className="bg-black text-white py-10 px-5 md:px-10">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">

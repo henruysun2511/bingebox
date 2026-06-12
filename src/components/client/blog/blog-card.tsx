@@ -13,7 +13,7 @@ export default function BlogCard({ blog }: BlogCardProps) {
     const { _id, title, thumbnail, createdAt } = blog;
 
     return (
-        <div className="w-[280px] group cursor-pointer bg-neutral-900/40 rounded-xl overflow-hidden border border-neutral-800 hover:border-blue/50 transition-all duration-300">
+        <div data-theme-fixed className="w-[280px] group cursor-pointer bg-comment rounded-xl overflow-hidden border border-white/5 hover:border-blue/50 transition-all duration-300">
             {/* Thumbnail */}
             <div className="relative h-[180px] w-full overflow-hidden">
                 <img

@@ -27,7 +27,7 @@ export default function ShowtimeMoviePage() {
                             <Link
                                 href={`/showtime/movie/${movie._id}`}
                                 key={movie._id}
-                                className="group flex flex-col bg-white/5 rounded-2xl overflow-hidden border border-white/10 hover:border-golden transition-all hover:-translate-y-2 shadow-xl"
+                                className="group flex flex-col bg-comment rounded-2xl overflow-hidden border border-white/10 hover:border-golden transition-all hover:-translate-y-2 shadow-xl"
                             >
                                 <div className="relative aspect-[2/3] overflow-hidden">
                                     <img

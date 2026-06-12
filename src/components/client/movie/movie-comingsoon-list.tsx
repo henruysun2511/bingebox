@@ -11,7 +11,7 @@ export default function MovieComingSoonList() {
 
     if (isLoading) {
         return (
-            <div className="flex flex-wrap gap-6 justify-start">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
                 {Array.from({ length: 8 }).map((_, index) => (
                     <MovieCardSkeleton key={index} />
                 ))}
@@ -23,13 +23,13 @@ export default function MovieComingSoonList() {
     const movies = data?.data || [];
 
     return (
-        <div className="flex flex-wrap gap-6 justify-start">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
             {movies.length > 0 ? (
                 movies.map((movie) => (
                     <MovieCard key={movie._id} movie={movie} />
                 ))
             ) : (
-                <div className="text-white">Chưa có phim sắp chiếu</div>
+                <div className="text-white col-span-full">Đang cập nhật phim sắp chiếu</div>
             )}
         </div>
     );

@@ -32,7 +32,7 @@ export default function MovieCard({ movie, status }: MovieCardProps) {
 
     return (
         <>
-            <div className="w-[230px] group cursor-pointer">
+            <div className="w-full group cursor-pointer">
                 {/* Poster */}
                 <div className="relative h-[320px] w-full overflow-hidden rounded-xl">
                     <img

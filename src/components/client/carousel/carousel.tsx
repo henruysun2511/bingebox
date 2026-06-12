@@ -32,7 +32,7 @@ export default function Carousel({ images }: CarouselProps) {
     }, [images]);
 
     return (
-        <div className="relative w-full mt-10 h-[700px] overflow-hidden">
+        <div data-theme-fixed className="relative w-full mt-10 aspect-video sm:aspect-auto sm:h-[420px] md:h-[550px] lg:h-[700px] overflow-hidden">
             {/* Slides */}
             <div
                 className="flex h-full transition-transform duration-700 ease-in-out"
@@ -66,28 +66,28 @@ export default function Carousel({ images }: CarouselProps) {
             {/* Prev */}
             <button
                 onClick={prevSlide}
-                className="absolute z-10 cursor-pointer top-1/2 left-4 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white rounded-full p-3 transition"
+                className="absolute z-10 cursor-pointer top-1/2 left-2 sm:left-4 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white rounded-full p-1.5 sm:p-3 transition"
             >
-                <ChevronLeft size={20} />
+                <ChevronLeft size={16} className="sm:w-5 sm:h-5" />
             </button>
 
             {/* Next */}
             <button
                 onClick={nextSlide}
-                className="absolute z-10 cursor-pointer top-1/2 right-4 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white rounded-full p-3 transition"
+                className="absolute z-10 cursor-pointer top-1/2 right-2 sm:right-4 -translate-y-1/2 bg-black/40 hover:bg-black/60 text-white rounded-full p-1.5 sm:p-3 transition"
             >
-                <ChevronRight size={20} />
+                <ChevronRight size={16} className="sm:w-5 sm:h-5" />
             </button>
 
             {/* Dots */}
-            <div className="absolute bottom-5 left-0 right-0 flex justify-center gap-3">
+            <div className="absolute bottom-3 sm:bottom-5 left-0 right-0 flex justify-center gap-2 sm:gap-3">
                 {images.map((_, index) => (
                     <div
                         key={index}
                         onClick={() => setActive(index)}
                         className={`cursor-pointer transition-all duration-500 z-10 ${active === index
-                            ? "w-6 h-2 rounded-xl bg-white"
-                            : "w-2 h-2 rounded-full bg-white/60"
+                            ? "w-4 sm:w-6 h-1.5 sm:h-2 rounded-xl bg-white"
+                            : "w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-white/60"
                             }`}
                     />
                 ))}

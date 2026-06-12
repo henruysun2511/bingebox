@@ -88,53 +88,6 @@ export default function SeatList({ roomId }: { roomId: string }) {
     });
   }
 
-  // const addRowBelow = (rowIndex: number) => {
-  //   // 1. Tìm loại ghế mặc định (loại thường)
-  //   const defaultCategory = categories.find((c: any) =>
-  //     !c.name.toLowerCase().includes("đôi")
-  //   ) || categories[0];
-
-  //   const baseRow = rows[rowIndex];
-  //   const newRow = {
-  //     rowKey: "",
-  //     seats: baseRow.seats.map((s: any) => {
-  //       // Nếu ghế ở hàng trên đang là ô trống (isBlocked)
-  //       // thì hàng dưới tạo ra cũng là ô trống và KHÔNG có seatType
-  //       if (s.isBlocked) {
-  //         return {
-  //           ...s,
-  //           id: crypto.randomUUID(),
-  //           _id: undefined,
-  //           isCoupleSeat: false,
-  //           partnerSeatCode: null,
-  //           seatType: null,      // Không có object loại ghế
-  //           seatTypeId: null,    // Không có ID loại ghế
-  //           code: "TRỐNG"
-  //         };
-  //       }
-
-  //       // Nếu là ghế bình thường thì mới gán defaultCategory
-  //       return {
-  //         ...s,
-  //         id: crypto.randomUUID(),
-  //         _id: undefined,
-  //         isCoupleSeat: false,
-  //         partnerSeatCode: null,
-  //         seatType: { ...defaultCategory },
-  //         seatTypeId: defaultCategory._id,
-  //         code: ""
-  //       };
-  //     })
-  //   };
-
-  //   const updated = [...rows];
-  //   updated.splice(rowIndex + 1, 0, newRow);
-
-  //   // Reindex để cập nhật lại rowKey (A, B, C...) và mã ghế (A1, A2...)
-  //   setRows(reindexAll(updated));
-  //   toast.success("Đã thêm hàng mới (giữ nguyên vị trí ô trống)");
-  // };
-
 
   const addRowBelow = (rowIndex: number) => {
     const baseRow = rows[rowIndex];

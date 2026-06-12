@@ -1,7 +1,9 @@
 "use client";
-import { Menu } from "lucide-react";
+import { Menu, Moon, Sun } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 // Shadcn Components
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -43,6 +45,10 @@ const menuItems = [
 
 export default function Header({ logo }: { logo: string }) {
   const router = useRouter();
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => { setMounted(true); }, []);
 
   //Lấy thông tin user và trạng thái từ store
   const user = useAuthStore((state) => state.user);
@@ -66,7 +72,7 @@ export default function Header({ logo }: { logo: string }) {
   const renderAuthButtons = (isMobile = false) => {
     if (!isHydrated) return null;
 
-    const containerClass = isMobile ? "flex flex-col gap-3 pt-4 border-t border-white/20" : "flex items-center gap-3";
+    const containerClass = isMobile ? "flex flex-col gap-3 pt-4 border-t border-white/20" : "flex items-center gap-3 text-white";
     const buttonClass = isMobile ? "w-full rounded-full" : "rounded-full px-6 transition-all hover:scale-105";
 
     if (user) {
@@ -99,7 +105,7 @@ export default function Header({ logo }: { logo: string }) {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full !z-[20] bg-blue shadow-[0_3px_3px_rgba(0,0,0,0.1)] px-4 md:px-[50px]">
+    <header data-theme-fixed className="fixed top-0 left-0 w-full !z-[20] bg-blue shadow-[0_3px_3px_rgba(0,0,0,0.1)] px-4 md:px-[50px]">
       <div className="flex items-center justify-between h-20 max-w-7xl mx-auto">
 
         {/* Logo Section */}
@@ -157,7 +163,15 @@ export default function Header({ logo }: { logo: string }) {
         </NavigationMenu>
 
         {/* Desktop Buttons */}
-        <div className="hidden lg:block">
+        <div className="hidden lg:flex items-center gap-3">
+          {mounted && (
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="text-white hover:bg-white/10 p-2 rounded-full transition"
+            >
+              {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+          )}
           {renderAuthButtons(false)}
         </div>
 
@@ -214,6 +228,17 @@ export default function Header({ logo }: { logo: string }) {
 
                 {/* Footer của Mobile Menu: Auth Buttons */}
                 <div className="pt-6 border-t border-white/10 mt-auto">
+                  <div className="flex items-center justify-between mb-3 px-4">
+                    {mounted && (
+                      <button
+                        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                        className="flex items-center gap-2 text-white/70 hover:text-white text-sm transition"
+                      >
+                        {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+                        {theme === "dark" ? "Sáng" : "Tối"}
+                      </button>
+                    )}
+                  </div>
                   <div className="flex flex-col gap-3">
                     {renderAuthButtons(true)}
                   </div>

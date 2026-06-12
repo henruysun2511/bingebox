@@ -37,7 +37,7 @@ export function DataPagination({
                   e.preventDefault();
                   onPageChange(p);
                 }}
-                className="px-3 py-1 bg-neutral-900 hover:bg-neutral-600 rounded-md border border-neutral-700"
+                className="px-3 py-1 bg-white/5 hover:bg-white/10 rounded-md border border-white/10 data-[active=true]:bg-blue data-[active=true]:border-blue data-[active=true]:text-white"
               >
                 {p}
               </PaginationLink>
