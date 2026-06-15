@@ -11,7 +11,7 @@ export const useGetSettings = () => {
             const res = await SettingService.getSettings();
             return res.data.data;
         },
-        staleTime: 1000 * 60 * 30,
+        staleTime: 0,
     });
 };
 
@@ -21,7 +21,7 @@ export const useUpdateSettings = () => {
         mutationFn: (payload: SettingInput) => SettingService.update(payload),
         onSuccess: () => {
             // Tự động làm mới dữ liệu sau khi update thành công
-            qc.invalidateQueries({ queryKey: SETTING_QUERY_KEY });
+            qc.invalidateQueries({ queryKey: SETTING_QUERY_KEY, refetchType: "active" });
         },
     });
 };
