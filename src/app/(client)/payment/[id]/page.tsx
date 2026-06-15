@@ -12,7 +12,7 @@ import {
     Utensils,
     XCircle
 } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
+import { notFound, useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -65,7 +65,7 @@ export default function PaymentDetailPage() {
 
     if (isLoading) return <LoadingScreen />;
 
-    if (!booking) return <div className="min-h-screen flex items-center justify-center text-white">Không tìm thấy thông tin đặt vé.</div>;
+    if (!booking) notFound();
 
     const handlePayment = () => {
         pay(bookingId, {

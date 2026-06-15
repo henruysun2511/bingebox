@@ -3,7 +3,7 @@ import MovieCard from "@/components/client/movie/movie-card";
 import LoadingScreen from "@/components/common/loading/loading-screen";
 import SectionTitle from "@/components/common/title/section-title";
 import { useActorDetail, useActorMovies } from "@/queries/useActorQuery";
-import { useParams } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 
 export default function ActorDetailPage() {
     const { id } = useParams<{ id: string }>();
@@ -15,7 +15,7 @@ export default function ActorDetailPage() {
     console.log(actor)
 
     if (isActorLoading) return <LoadingScreen />;
-    if (!actor) return <div className="text-white p-10">Actor not found</div>;
+    if (!actor) notFound();
 
     return (
         <>

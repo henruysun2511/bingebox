@@ -14,7 +14,7 @@ import { addDays, format, isSameDay } from "date-fns";
 import { vi } from "date-fns/locale";
 import { Calendar1, Clock1, Heart } from "lucide-react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -94,7 +94,7 @@ export default function MovieDetailPage() {
     };
 
     if (isLoading) return <LoadingScreen />;
-    if (!movie) return <div className="text-white p-10">Movie not found</div>;
+    if (!movie) notFound();
 
 
     return (

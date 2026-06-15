@@ -10,7 +10,9 @@
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4-06B6D4?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 [![Socket.IO](https://img.shields.io/badge/Socket.IO-4-010101?style=for-the-badge&logo=socket.io)](https://socket.io/)
 
-BingeBox là nền tảng đặt vé xem phim trực tuyến được phát triển với mục tiêu mang đến trải nghiệm đặt vé nhanh chóng, tiện lợi và hiện đại cho người dùng. Ứng dụng tích hợp đầy đủ các chức năng từ tra cứu lịch chiếu, chọn ghế theo thời gian thực, đặt combo bỏng nước cho đến hệ thống quản trị nội dung toàn diện.
+BINGEBOX là hệ thống quản lý và đặt vé xem phim trực tuyến, được xây dựng nhằm mô phỏng quy trình vận hành của một rạp chiếu phim hiện đại trên nền tảng web. Hệ thống cho phép người dùng tra cứu phim đang chiếu và sắp chiếu, lựa chọn suất chiếu theo rạp và định dạng phòng (2D, 3D, IMAX), tương tác với sơ đồ ghế trực quan và đồng bộ trạng thái ghế theo thời gian thực qua WebSocket, đặt kèm đồ ăn, áp dụng mã giảm giá, sử dụng điểm thưởng thành viên và thanh toán để nhận vé điện tử qua mã QR.
+
+Bên cạnh các chức năng dành cho khách hàng, BINGEBOX cung cấp trang quản trị toàn diện với các module: quản lý phim và danh mục, quản lý rạp và phòng chiếu, thiết kế sơ đồ ghế trực quan với hỗ trợ ghế đôi và ô trống, cấu hình giá vé đa chiều (theo khung giờ, độ tuổi, định dạng phòng, loại ghế và thứ trong tuần), quản lý suất chiếu và lịch chiếu, quản lý đồ ăn và voucher khuyến mãi, quản lý thành viên và hạng hội viên, thống kê doanh thu và báo cáo trực quan. Hệ thống cũng tích hợp phân quyền người dùng, quản lý banner quảng cáo, tin tức và blog, cùng cơ chế dọn dẹp hóa đơn lỗi tự động nhằm đảm bảo dữ liệu vận hành luôn nhất quán.
 
 </div>
 

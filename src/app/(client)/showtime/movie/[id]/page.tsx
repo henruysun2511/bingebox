@@ -9,7 +9,7 @@ import {
   PlayCircle
 } from "lucide-react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import { useMemo, useRef, useState } from "react";
 
 import LoadingScreen from "@/components/common/loading/loading-screen";
@@ -81,7 +81,7 @@ export default function MovieShowtimeDetailPage() {
   }, [selectedPastDate, allShowtimesRaw]);
 
   if (isMovieLoading) return <LoadingScreen />
-  if (!movie) return <div className="min-h-screen bg-black flex items-center justify-center">Không tìm thấy phim</div>;
+  if (!movie) notFound();
 
   return (
     <div className="min-h-screen text-white pb-20 ">
