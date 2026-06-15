@@ -219,11 +219,11 @@ export default function MovieDetailPage() {
                                 </div>
 
                                 {/* BUTTONS */}
-                                <div data-theme-fixed className="flex flex-wrap gap-3 sm:gap-4 mt-6">
+                                <div className="flex flex-wrap gap-3 sm:gap-4 mt-6">
 
                                     <button
                                         onClick={() => setShowTrailer(true)}
-                                        className="px-6 py-2 rounded-full bg-blue hover:opacity-90 transition font-semibold"
+                                        className="px-6 py-2 rounded-full bg-blue hover:opacity-90 transition font-semibold text-[#ffffff]"
                                     >
                                         TRAILER
                                     </button>
@@ -231,7 +231,7 @@ export default function MovieDetailPage() {
                                     {!isComingSoon && (
                                         <button
                                             onClick={scrollToShowtimes}
-                                            className="px-6 py-2 rounded-full bg-red-500 hover:opacity-90 transition font-semibold"
+                                            className="px-6 py-2 rounded-full bg-red-500 hover:opacity-90 transition font-semibold text-[#ffffff]"
                                         >
                                             ĐẶT VÉ
                                         </button>
